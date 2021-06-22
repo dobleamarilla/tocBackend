@@ -1,0 +1,73 @@
+import {mongoose} from '../bbdd/conexion';
+
+var schemaSincro = new mongoose.Schema({
+    _id: Number,
+    inicioTime: Number,
+    finalTime: Number,
+    idDependienta: Number,
+    totalApertura: Number,
+    totalCierre: Number,
+    descuadre: Number,
+    recaudado: Number,
+    nClientes: Number,
+    primerTicket: Number,
+    infoExtra: {
+        cambioInicial: Number,
+        cambioFinal: Number,
+        totalSalidas: Number,
+        totalEntradas: Number,
+        totalEnEfectivo: Number,
+        totalTarjeta: Number,
+        totalDeuda: Number
+    },
+    ultimoTicket: Number,
+    calaixFetZ: Number,
+    detalleApertura: [{
+        _id: String,
+        valor: Number,
+        unidades: Number
+    }],
+    detalleCierre: [{
+        _id: String,
+        valor: Number,
+        unidades: Number
+    }],
+    enviado: {
+        type: Boolean,
+        default: false
+    },
+    enTransito: {
+        type: Boolean,
+        default: false
+    },
+    totalDatafono3G: Number,
+    totalClearOne: Number
+});
+var SincroCajas = mongoose.model('sincro-cajas', schemaSincro);
+
+export function nuevoItemSincroCajas(data): void
+{
+    data._id = Date.now();
+    var aux = new SincroCajas(data);
+    aux.save();
+}
+
+export function getCaja()
+{
+    return SincroCajas.findOneAndUpdate({enviado: false, enTransito: false}, {enTransito: true}, {lean: true, sort: {_id: 1}});
+}
+export function confirmarEnvioCaja(data)
+{
+    SincroCajas.updateOne({_id: data}, {enviado: true, enTransito: false}).catch(err=>{
+        console.log(err);
+    });
+}
+export function cleanCajas()
+{
+    SincroCajas.updateMany({enviado: false, enTransito: true}, {enTransito: false}).then(info=>{
+        if(info.n > 0)
+        {
+            console.log("Cajas pendientes enviados al servidor");
+        }
+    });
+}

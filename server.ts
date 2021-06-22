@@ -51,7 +51,7 @@ const ioToc = require('socket.io')(http, {
     origin: "http://localhost:8081" //poner 8080, era un cambio temporal
   }
 });
-const port = 80;
+const port = 8082;
 
 const history = require('connect-history-api-fallback');
 app.use(cors());

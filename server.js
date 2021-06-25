@@ -51,11 +51,11 @@ const http = require('http').Server(app);
 exports.http = http;
 const ioToc = require('socket.io')(http, {
     cors: {
-        origin: "http://localhost:8081" //poner 8080, era un cambio temporal
+        origin: "http://localhost:8080" //poner 8080, era un cambio temporal
     }
 });
 exports.ioToc = ioToc;
-const port = 8082;
+const port = 80;
 exports.port = port;
 const history = require('connect-history-api-fallback');
 app.use(cors_1.default());

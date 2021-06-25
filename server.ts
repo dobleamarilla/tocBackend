@@ -48,10 +48,10 @@ const app = express();
 const http = require('http').Server(app);
 const ioToc = require('socket.io')(http, {
   cors: {
-    origin: "http://localhost:8081" //poner 8080, era un cambio temporal
+    origin: "http://localhost:8080" //poner 8080, era un cambio temporal
   }
 });
-const port = 8082;
+const port = 80;
 
 const history = require('connect-history-api-fallback');
 app.use(cors());

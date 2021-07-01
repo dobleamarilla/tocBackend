@@ -1,78 +1,69 @@
-import * as schCestas from "../componentes/schemas/cestas";
-import {construirObjetoIvas, crearCestaVacia} from "../funciones/funciones";
-import {articulos} from "../clases/Articulos";
-import {ofertas} from "../clases/Ofertas";
-import {caja} from "../clases/Caja";
+import * as schCestas from '../componentes/schemas/cestas';
+
+import {construirObjetoIvas, crearCestaVacia} from '../funciones/funciones';
+
+import {articulos} from '../clases/Articulos';
+
+import {ofertas} from '../clases/Ofertas';
+
+import {caja} from '../clases/Caja';
 
 class CestaClase {
-    private cesta: Cesta;
-    private udsAplicar: number;
-    constructor(){
-        schCestas.getUnaCesta().then((respuesta) => {
-            if(respuesta != undefined && respuesta != null && respuesta.lista.length != 0 && respuesta._id != null) {
-                for(let i = 0; i < respuesta.lista.length; i++) {
-                    respuesta.lista[i].subtotal = Number(respuesta.lista[i].subtotal.toFixed(2));
-                }
-                this.cesta = respuesta;
-            }
-            else {
-                this.cesta = crearCestaVacia();
-            }
-        });
-        this.udsAplicar = 1;
+  private cesta: Cesta;
+  private udsAplicar: number;
+  constructor() {
+    schCestas.getUnaCesta().then((respuesta) => {
+      if (respuesta != undefined && respuesta != null && respuesta.lista.length != 0 && respuesta._id != null) {
+      for (let i = 0; i < respuesta.lista.length; i++) {
+        respuesta.lista[i].subtotal = Number(respuesta.lista[i].subtotal.toFixed(2));
+      }
+      this.cesta = respuesta;
+    } else {
+        this.cesta = crearCestaVacia();
+      }
+    });
+    this.udsAplicar = 1;
+  }
+  setCesta(data: Cesta) {
+    for(let i = 0; i < data.lista.length; i++) {
+      data.lista[i].subtotal = Number(data.lista[i].subtotal.toFixed(2));
     }
-    setCesta(data: Cesta) {
-        for(let i = 0; i < data.lista.length; i++)
-        {
-            data.lista[i].subtotal = Number(data.lista[i].subtotal.toFixed(2));
+    schCestas.setCesta(data);
+    this.cesta = data;
+    this.enviarCesta();
+  }
+  enviarCesta() {
+    //enviar cesta al frontend
+  }
+  getCesta() {
+    return this.cesta;
+  }
+  async limpiarCesta(unaCesta: Cesta, posicionPrincipal: number, posicionSecundario: number, sobraCantidadPrincipal: number, sobraCantidadSecundario: number, pideDelA: number, pideDelB: number) {
+    if(pideDelA != -1) {
+      if(sobraCantidadPrincipal > 0) {
+        const datosArticulo = await articulos.getInfoArticulo(unaCesta.lista[posicionPrincipal]._id);
+        unaCesta.lista[posicionPrincipal].unidades = sobraCantidadPrincipal;
+        unaCesta.lista[posicionPrincipal].subtotal = sobraCantidadPrincipal*datosArticulo.precioConIva;
+      } else {
+        unaCesta.lista.splice(posicionPrincipal, 1);
         }
-        schCestas.setCesta(data);
-        this.cesta = data;
-        this.enviarCesta();
     }
-    enviarCesta(){
-        //enviar cesta al frontend
-    }
-    getCesta(){
-        return this.cesta;
-    }
-    async limpiarCesta(unaCesta: Cesta, posicionPrincipal: number, posicionSecundario: number, sobraCantidadPrincipal: number, sobraCantidadSecundario: number, pideDelA: number, pideDelB: number) {
-        if(pideDelA != -1)
-        {
-            if(sobraCantidadPrincipal > 0)
-            {
-                const datosArticulo = await articulos.getInfoArticulo(unaCesta.lista[posicionPrincipal]._id);
-                unaCesta.lista[posicionPrincipal].unidades = sobraCantidadPrincipal;
-                unaCesta.lista[posicionPrincipal].subtotal = sobraCantidadPrincipal*datosArticulo.precioConIva;
-            }
-            else
-            {
-                unaCesta.lista.splice(posicionPrincipal, 1);
-            }
-        }
 
-        if(pideDelB != -1)
-        {
-            if(sobraCantidadSecundario > 0)
-            {
-                const datosArticulo = await articulos.getInfoArticulo(unaCesta.lista[posicionSecundario]._id);
-                unaCesta.lista[posicionSecundario].unidades = sobraCantidadSecundario;
-                unaCesta.lista[posicionSecundario].subtotal = sobraCantidadSecundario*datosArticulo.precioConIva;
-            }
-            else
-            {
-                if(posicionSecundario > posicionPrincipal)
-                {
-                    unaCesta.lista.splice(posicionSecundario-1, 1);
-                }
-                else
-                {
-                    unaCesta.lista.splice(posicionSecundario, 1);
-                }
-            }
+    if(pideDelB != -1) {
+      if(sobraCantidadSecundario > 0) {
+        const datosArticulo = await articulos.getInfoArticulo(unaCesta.lista[posicionSecundario]._id);
+        unaCesta.lista[posicionSecundario].unidades = sobraCantidadSecundario;
+        unaCesta.lista[posicionSecundario].subtotal = sobraCantidadSecundario*datosArticulo.precioConIva;
+      } else {
+          if(posicionSecundario > posicionPrincipal) {
+            unaCesta.lista.splice(posicionSecundario-1, 1);
+          } else {
+              unaCesta.lista.splice(posicionSecundario, 1);
+          }
         }
-        return unaCesta;
     }
+    return unaCesta;
+}
     async insertarArticuloCesta(infoArticulo, unidades: number, infoAPeso = null) {
         var miCesta = this.getCesta();
         

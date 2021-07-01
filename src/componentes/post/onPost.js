@@ -39,6 +39,7 @@ server_1.app.post("/clickTeclaArticulo", (req, res) => {
     if (TeclasMenus_1.teclasMenus.getStopNecesario() == false) {
         Cestas_1.cestas.addItem(req.body.idArticulo, req.body.idBoton, req.body.peso, req.body.infoPeso).then(cesta => {
             res.json({ error: false, bloqueado: false, cesta: cesta });
+            console.log('Estoy bien hasta aquí Eze');
         });
     }
     else {
@@ -49,7 +50,7 @@ server_1.app.post("/setUnidadesAplicar", (req, res) => {
     Cestas_1.cestas.setUnidadesAplicar(req.body.unidades);
     res.json({ okey: true });
 });
-server_1.app.post("/getMenus", (req, res) => {
+server_1.app.post('/getMenus', (req, res) => {
     TeclasMenus_1.teclasMenus.getMenus().then(resultado => {
         if (TeclasMenus_1.teclasMenus.getStopNecesario() == false) {
             res.json({ bloqueado: false, resultado: resultado });

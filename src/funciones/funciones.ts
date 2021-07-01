@@ -45,7 +45,9 @@ export function construirObjetoIvas(infoArticulo, unidades, tipoIvaAnterior: Tip
 
     
 }
-
+export function convertirPuntosEnDinero(puntos: number): number {
+  return Math.trunc(puntos*0.03*0.02);
+}
 export function crearCestaVacia() {
     const cestaVacia = {
         _id: Date.now(),

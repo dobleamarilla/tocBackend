@@ -2,6 +2,7 @@ import {app} from '../../../server';
 import {teclasMenus} from "../../clases/TeclasMenus";
 import {getUnaCesta} from "../schemas/cestas";
 import {articulos} from "../../clases/Articulos";
+import { convertirPuntosEnDinero } from '../../funciones/funciones';
 import {cestas} from "../../clases/Cestas";
 import {parametros} from "../../clases/Parametros";
 import {socketSanPedro} from "../../../server";
@@ -42,6 +43,7 @@ app.post("/clickTeclaArticulo", (req, res)=>{
     if(teclasMenus.getStopNecesario() == false){
         cestas.addItem(req.body.idArticulo, req.body.idBoton, req.body.peso, req.body.infoPeso).then(cesta=>{
             res.json({error: false, bloqueado: false, cesta: cesta});
+            console.log('Estoy bien hasta aquí Eze')
         });
     }
     else {
@@ -52,8 +54,11 @@ app.post("/setUnidadesAplicar", (req, res)=>{
     cestas.setUnidadesAplicar(req.body.unidades);
     res.json({okey: true});
 });
+app.post("/convertirPuntosEnDinero", (req, res)=>{
+    res.json({okey: true, dinero: convertirPuntosEnDinero(req.body.puntosClienteActivo)});
+});
 
-app.post("/getMenus", (req, res)=>{
+app.post('/getMenus', (req, res) => {
     teclasMenus.getMenus().then(resultado=>{
         if(teclasMenus.getStopNecesario() == false){
             res.json({bloqueado: false, resultado: resultado});
@@ -64,7 +69,7 @@ app.post("/getMenus", (req, res)=>{
     });
 });
 app.post("/getCesta", (req, res)=>{
-    getUnaCesta().then(resultado=>{
+    getUnaCesta().then(resultado => {
         res.json(resultado); 
     });
 });

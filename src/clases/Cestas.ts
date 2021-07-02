@@ -8,6 +8,7 @@ import {ofertas} from '../clases/Ofertas';
 
 import {caja} from '../clases/Caja';
 
+
 class CestaClase {
   private cesta: Cesta;
   private udsAplicar: number;
@@ -24,18 +25,63 @@ class CestaClase {
     });
     this.udsAplicar = 1;
   }
+
+  getCurrentId() {
+    return this.cesta._id;
+  }
+
+  async reiniciarCesta(idCestaBorrar) {
+    this.borrarCesta(idCestaBorrar);
+    const res = await schCestas.getAllCestas();
+    if(res.length > 0) {
+        this.setCesta(res[0]);
+    } else {
+        this.setCesta(this.nuevaCestaVacia());
+    }
+    return this.getCurrentCesta();
+  }
+
+  nuevaCestaVacia() {
+    const nuevaCesta: Cesta = {
+        _id: Date.now(),
+        tiposIva: {
+            base1: 0,
+            base2: 0,
+            base3: 0,
+            valorIva1: 0,
+            valorIva2: 0,
+            valorIva3: 0,
+            importe1: 0,
+            importe2: 0,
+            importe3: 0
+        },
+        lista: []
+    };
+    return nuevaCesta;
+  }
+
+  borrarCesta(idCestaBorrar) {
+    schCestas.borrarCesta(idCestaBorrar);
+  }
+
+  cambiarCurrentCesta(data: Cesta) {
+    for(let i = 0; i < data.lista.length; i++) {
+        data.lista[i].subtotal = Number(data.lista[i].subtotal.toFixed(2));
+    }
+    this.cesta = data;
+  }
+
   setCesta(data: Cesta) {
     for(let i = 0; i < data.lista.length; i++) {
       data.lista[i].subtotal = Number(data.lista[i].subtotal.toFixed(2));
     }
     schCestas.setCesta(data);
     this.cesta = data;
-    this.enviarCesta();
   }
-  enviarCesta() {
-    //enviar cesta al frontend
-  }
-  getCesta() {
+//   enviarCesta() {
+//     //enviar cesta al frontend
+//   }
+  getCurrentCesta() {
     return this.cesta;
   }
   async limpiarCesta(unaCesta: Cesta, posicionPrincipal: number, posicionSecundario: number, sobraCantidadPrincipal: number, sobraCantidadSecundario: number, pideDelA: number, pideDelB: number) {
@@ -65,7 +111,7 @@ class CestaClase {
     return unaCesta;
 }
     async insertarArticuloCesta(infoArticulo, unidades: number, infoAPeso = null) {
-        var miCesta = this.getCesta();
+        var miCesta = this.getCurrentCesta();
         
         if(miCesta.lista.length > 0)
         {

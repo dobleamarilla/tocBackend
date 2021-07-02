@@ -49,18 +49,60 @@ class CestaClase {
         });
         this.udsAplicar = 1;
     }
+    getCurrentId() {
+        return this.cesta._id;
+    }
+    reiniciarCesta(idCestaBorrar) {
+        return __awaiter(this, void 0, void 0, function* () {
+            this.borrarCesta(idCestaBorrar);
+            const res = yield schCestas.getAllCestas();
+            if (res.length > 0) {
+                this.setCesta(res[0]);
+            }
+            else {
+                this.setCesta(this.nuevaCestaVacia());
+            }
+            return this.getCurrentCesta();
+        });
+    }
+    nuevaCestaVacia() {
+        const nuevaCesta = {
+            _id: Date.now(),
+            tiposIva: {
+                base1: 0,
+                base2: 0,
+                base3: 0,
+                valorIva1: 0,
+                valorIva2: 0,
+                valorIva3: 0,
+                importe1: 0,
+                importe2: 0,
+                importe3: 0
+            },
+            lista: []
+        };
+        return nuevaCesta;
+    }
+    borrarCesta(idCestaBorrar) {
+        schCestas.borrarCesta(idCestaBorrar);
+    }
+    cambiarCurrentCesta(data) {
+        for (let i = 0; i < data.lista.length; i++) {
+            data.lista[i].subtotal = Number(data.lista[i].subtotal.toFixed(2));
+        }
+        this.cesta = data;
+    }
     setCesta(data) {
         for (let i = 0; i < data.lista.length; i++) {
             data.lista[i].subtotal = Number(data.lista[i].subtotal.toFixed(2));
         }
         schCestas.setCesta(data);
         this.cesta = data;
-        this.enviarCesta();
     }
-    enviarCesta() {
-        //enviar cesta al frontend
-    }
-    getCesta() {
+    //   enviarCesta() {
+    //     //enviar cesta al frontend
+    //   }
+    getCurrentCesta() {
         return this.cesta;
     }
     limpiarCesta(unaCesta, posicionPrincipal, posicionSecundario, sobraCantidadPrincipal, sobraCantidadSecundario, pideDelA, pideDelB) {
@@ -95,7 +137,7 @@ class CestaClase {
     }
     insertarArticuloCesta(infoArticulo, unidades, infoAPeso = null) {
         return __awaiter(this, void 0, void 0, function* () {
-            var miCesta = this.getCesta();
+            var miCesta = this.getCurrentCesta();
             if (miCesta.lista.length > 0) {
                 let encontrado = false;
                 for (let i = 0; i < miCesta.lista.length; i++) {

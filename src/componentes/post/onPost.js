@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const server_1 = require("../../../server");
 const TeclasMenus_1 = require("../../clases/TeclasMenus");
-const cestas_1 = require("../schemas/cestas");
+const funciones_1 = require("../../funciones/funciones");
 const Cestas_1 = require("../../clases/Cestas");
 const Parametros_1 = require("../../clases/Parametros");
 const server_2 = require("../../../server");
@@ -50,6 +50,22 @@ server_1.app.post("/setUnidadesAplicar", (req, res) => {
     Cestas_1.cestas.setUnidadesAplicar(req.body.unidades);
     res.json({ okey: true });
 });
+server_1.app.post("/convertirPuntosEnDinero", (req, res) => {
+    res.json({ okey: true, dinero: funciones_1.convertirPuntosEnDinero(req.body.puntosClienteActivo) });
+});
+server_1.app.post("/borrarCesta", (req, res) => {
+    if (Cestas_1.cestas.getCurrentId() === req.body.id) { // Es la cesta actual, el current se reemplazará por una guardada o una nueva (si no hay)
+        console.log('Voy a eliminar la ceta: ', req.body.id);
+        Cestas_1.cestas.reiniciarCesta(req.body.id).then((cestaNueva) => {
+            res.json({
+                okey: true,
+                cestaNueva: cestaNueva,
+            });
+        });
+    }
+    else { // Es una cesta guardada. No hay que modificar el current.
+    }
+});
 server_1.app.post('/getMenus', (req, res) => {
     TeclasMenus_1.teclasMenus.getMenus().then(resultado => {
         if (TeclasMenus_1.teclasMenus.getStopNecesario() == false) {
@@ -61,9 +77,7 @@ server_1.app.post('/getMenus', (req, res) => {
     });
 });
 server_1.app.post("/getCesta", (req, res) => {
-    cestas_1.getUnaCesta().then(resultado => {
-        res.json(resultado);
-    });
+    res.json(Cestas_1.cestas.getCurrentCesta());
 });
 // import {concha, reset, modificar} from '../toc/general';
 // app.post("/fulana", ()=>{

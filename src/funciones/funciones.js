@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.crearCestaVacia = exports.construirObjetoIvas = void 0;
+exports.crearCestaVacia = exports.convertirPuntosEnDinero = exports.construirObjetoIvas = void 0;
 function redondearPrecio(precio) {
     return Math.round(precio * 100) / 100;
 }
@@ -62,6 +62,10 @@ function construirObjetoIvas(infoArticulo, unidades, tipoIvaAnterior, infoAPeso 
     return aux;
 }
 exports.construirObjetoIvas = construirObjetoIvas;
+function convertirPuntosEnDinero(puntos) {
+    return Math.trunc(puntos * 0.03 * 0.02);
+}
+exports.convertirPuntosEnDinero = convertirPuntosEnDinero;
 function crearCestaVacia() {
     const cestaVacia = {
         _id: Date.now(),

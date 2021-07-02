@@ -106,7 +106,10 @@ export function getCestaConcreta(idCesta: number)
 }
 export function borrarCesta(id: number)
 {
-    return Cestas.deleteMany({_id: id});
+    console.log('Borro realmente: ', id);
+    return Cestas.deleteOne({_id: id}, null, function(res){
+        console.log(res);
+    });
 }
 export function getAllCestas()
 {

@@ -55,7 +55,7 @@ const ioToc = require('socket.io')(http, {
     }
 });
 exports.ioToc = ioToc;
-const port = 80;
+const port = 8081;
 exports.port = port;
 const history = require('connect-history-api-fallback');
 app.use(cors_1.default());
@@ -85,4 +85,3 @@ ioToc.on('connection', function (socket) {
 http.listen(port, function () {
     console.log(`Server: http://localhost:${port}`);
 });
-console.log(socketSanPedro);

@@ -1,6 +1,6 @@
 import {app} from '../../../server';
 import {teclasMenus} from "../../clases/TeclasMenus";
-import {getUnaCesta} from "../schemas/cestas";
+import {getUnaCesta, borrarCesta} from "../schemas/cestas";
 import {articulos} from "../../clases/Articulos";
 import { convertirPuntosEnDinero } from '../../funciones/funciones';
 import {cestas} from "../../clases/Cestas";
@@ -57,6 +57,19 @@ app.post("/setUnidadesAplicar", (req, res)=>{
 app.post("/convertirPuntosEnDinero", (req, res)=>{
     res.json({okey: true, dinero: convertirPuntosEnDinero(req.body.puntosClienteActivo)});
 });
+app.post("/borrarCesta", (req, res) => {
+    if(cestas.getCurrentId() === req.body.id) { // Es la cesta actual, el current se reemplazará por una guardada o una nueva (si no hay)
+        console.log('Voy a eliminar la ceta: ', req.body.id);
+        cestas.reiniciarCesta(req.body.id).then((cestaNueva) => {
+            res.json({
+                okey: true,
+                cestaNueva: cestaNueva,
+            });
+        });
+    } else { // Es una cesta guardada. No hay que modificar el current.
+        
+    }
+});
 
 app.post('/getMenus', (req, res) => {
     teclasMenus.getMenus().then(resultado=>{
@@ -69,9 +82,7 @@ app.post('/getMenus', (req, res) => {
     });
 });
 app.post("/getCesta", (req, res)=>{
-    getUnaCesta().then(resultado => {
-        res.json(resultado); 
-    });
+    res.json(cestas.getCurrentCesta()); 
 });
 // import {concha, reset, modificar} from '../toc/general';
 

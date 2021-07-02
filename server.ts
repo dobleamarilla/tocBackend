@@ -51,12 +51,11 @@ const ioToc = require('socket.io')(http, {
     origin: "http://localhost:8080" //poner 8080, era un cambio temporal
   }
 });
-const port = 80;
+const port = 8081;
 
 const history = require('connect-history-api-fallback');
 app.use(cors());
 app.use(history());
-
 
 var servidor: string;
 
@@ -89,5 +88,4 @@ http.listen(port, function() {
    console.log(`Server: http://localhost:${port}`);
 });
 
-console.log(socketSanPedro);
 export {express, app, http, ioToc, port, socketSanPedro}

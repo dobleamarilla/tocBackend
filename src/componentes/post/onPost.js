@@ -66,6 +66,19 @@ server_1.app.post("/borrarCesta", (req, res) => {
     else { // Es una cesta guardada. No hay que modificar el current.
     }
 });
+server_1.app.post("/borrarItemCesta", (req, res) => {
+    Cestas_1.cestas.borrarItemCesta(req.body._id, req.body.idArticulo).then((cestaNueva) => {
+        res.json({
+            okey: true,
+            cestaNueva
+        });
+    }).catch((err) => {
+        res.json({
+            okey: false,
+            error: "Error en borrarItemCesta"
+        });
+    });
+});
 server_1.app.post('/getMenus', (req, res) => {
     TeclasMenus_1.teclasMenus.getMenus().then(resultado => {
         if (TeclasMenus_1.teclasMenus.getStopNecesario() == false) {

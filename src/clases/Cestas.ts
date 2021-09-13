@@ -8,11 +8,12 @@ import {ofertas} from '../clases/Ofertas';
 
 import {caja} from '../clases/Caja';
 
-
+/* Siempre cargar la cesta desde MongoDB */
 class CestaClase {
   private cesta: Cesta;
   private udsAplicar: number;
   constructor() {
+    /* CARGA DESDE MONGO UNA CESTA EN MEMORIA DE NODE */
     schCestas.getUnaCesta().then((respuesta) => {
       if (respuesta != undefined && respuesta != null && respuesta.lista.length != 0 && respuesta._id != null) {
       for (let i = 0; i < respuesta.lista.length; i++) {
@@ -24,6 +25,10 @@ class CestaClase {
       }
     });
     this.udsAplicar = 1;
+  }
+
+  getCesta(idCesta: number) {
+    return schCestas.getCestaConcreta(idCesta);
   }
 
   getCurrentId() {
@@ -64,6 +69,23 @@ class CestaClase {
     schCestas.borrarCesta(idCestaBorrar);
   }
 
+  /* Obtiene la cesta, borra el  item y devuelve la cesta final */
+  borrarItemCesta(idCesta: number, idArticulo: number) {
+    const cestaFinal = this.getCesta(idCesta).then((cesta) => {
+        for (let i = 0; i < cesta.lista.length; i++) {
+          if (cesta.lista[i]._id == idArticulo) {
+            cesta.lista.splice(i, 1);
+            break;
+          }
+        }
+        this.setCesta(cesta);
+        return cesta;
+    }).catch((err) => {
+        console.log(err);
+    });
+    return cestaFinal;
+  }
+
   cambiarCurrentCesta(data: Cesta) {
     for(let i = 0; i < data.lista.length; i++) {
         data.lista[i].subtotal = Number(data.lista[i].subtotal.toFixed(2));
@@ -71,6 +93,7 @@ class CestaClase {
     this.cesta = data;
   }
 
+  /* Guarda la cesta en Mongo */
   setCesta(data: Cesta) {
     for(let i = 0; i < data.lista.length; i++) {
       data.lista[i].subtotal = Number(data.lista[i].subtotal.toFixed(2));
@@ -78,9 +101,7 @@ class CestaClase {
     schCestas.setCesta(data);
     this.cesta = data;
   }
-//   enviarCesta() {
-//     //enviar cesta al frontend
-//   }
+
   getCurrentCesta() {
     return this.cesta;
   }

@@ -34,8 +34,10 @@ const funciones_1 = require("../funciones/funciones");
 const Articulos_1 = require("../clases/Articulos");
 const Ofertas_1 = require("../clases/Ofertas");
 const Caja_1 = require("../clases/Caja");
+/* Siempre cargar la cesta desde MongoDB */
 class CestaClase {
     constructor() {
+        /* CARGA DESDE MONGO UNA CESTA EN MEMORIA DE NODE */
         schCestas.getUnaCesta().then((respuesta) => {
             if (respuesta != undefined && respuesta != null && respuesta.lista.length != 0 && respuesta._id != null) {
                 for (let i = 0; i < respuesta.lista.length; i++) {
@@ -48,6 +50,9 @@ class CestaClase {
             }
         });
         this.udsAplicar = 1;
+    }
+    getCesta(idCesta) {
+        return schCestas.getCestaConcreta(idCesta);
     }
     getCurrentId() {
         return this.cesta._id;
@@ -86,12 +91,29 @@ class CestaClase {
     borrarCesta(idCestaBorrar) {
         schCestas.borrarCesta(idCestaBorrar);
     }
+    /* Obtiene la cesta, borra el  item y devuelve la cesta final */
+    borrarItemCesta(idCesta, idArticulo) {
+        const cestaFinal = this.getCesta(idCesta).then((cesta) => {
+            for (let i = 0; i < cesta.lista.length; i++) {
+                if (cesta.lista[i]._id == idArticulo) {
+                    cesta.lista.splice(i, 1);
+                    break;
+                }
+            }
+            this.setCesta(cesta);
+            return cesta;
+        }).catch((err) => {
+            console.log(err);
+        });
+        return cestaFinal;
+    }
     cambiarCurrentCesta(data) {
         for (let i = 0; i < data.lista.length; i++) {
             data.lista[i].subtotal = Number(data.lista[i].subtotal.toFixed(2));
         }
         this.cesta = data;
     }
+    /* Guarda la cesta en Mongo */
     setCesta(data) {
         for (let i = 0; i < data.lista.length; i++) {
             data.lista[i].subtotal = Number(data.lista[i].subtotal.toFixed(2));
@@ -99,9 +121,6 @@ class CestaClase {
         schCestas.setCesta(data);
         this.cesta = data;
     }
-    //   enviarCesta() {
-    //     //enviar cesta al frontend
-    //   }
     getCurrentCesta() {
         return this.cesta;
     }

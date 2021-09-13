@@ -70,6 +70,19 @@ app.post("/borrarCesta", (req, res) => {
         
     }
 });
+app.post("/borrarItemCesta", (req, res) => {
+    cestas.borrarItemCesta(req.body._id, req.body.idArticulo).then((cestaNueva) => {
+        res.json({
+            okey: true,
+            cestaNueva
+        });
+    }).catch((err) => {
+        res.json({
+            okey: false,
+            error: "Error en borrarItemCesta"
+        });
+    });
+});
 
 app.post('/getMenus', (req, res) => {
     teclasMenus.getMenus().then(resultado=>{

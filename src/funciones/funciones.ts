@@ -1,3 +1,17 @@
+
+interface TiposIva 
+{
+    base1: number,
+    base2: number,
+    base3: number,
+    valorIva1: number,
+    valorIva2: number,
+    valorIva3: number,
+    importe1: number,
+    importe2: number,
+    importe3: number
+}
+
 function redondearPrecio(precio) /* REDONDEA AL SEGUNDO DECIMAL */ 
 {
     return Math.round(precio * 100) / 100;

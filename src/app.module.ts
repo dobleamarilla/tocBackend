@@ -13,6 +13,7 @@ import { CajaController } from './caja/caja.controller';
 import { ClientesController } from './clientes/clientes.controller';
 import { ImpresoraController } from './impresora/impresora.controller';
 import { SocketGateway } from './sockets.gateway';
+import { DevolucionesController } from './devoluciones/devoluciones.controller';
 
 @Module({
   imports: [
@@ -27,7 +28,7 @@ import { SocketGateway } from './sockets.gateway';
     CestasController, 
     ParametrosController, 
     TicketsController, 
-    TrabajadoresController, CajaController, ClientesController, ImpresoraController],
+    TrabajadoresController, CajaController, ClientesController, ImpresoraController, DevolucionesController],
   providers: [SocketGateway]  
 })
 export class AppModule {}

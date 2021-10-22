@@ -21,6 +21,7 @@ const caja_controller_1 = require("./caja/caja.controller");
 const clientes_controller_1 = require("./clientes/clientes.controller");
 const impresora_controller_1 = require("./impresora/impresora.controller");
 const sockets_gateway_1 = require("./sockets.gateway");
+const devoluciones_controller_1 = require("./devoluciones/devoluciones.controller");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -37,7 +38,7 @@ AppModule = __decorate([
             cestas_controller_1.CestasController,
             parametros_controller_1.ParametrosController,
             tickets_controller_1.TicketsController,
-            trabajadores_controller_1.TrabajadoresController, caja_controller_1.CajaController, clientes_controller_1.ClientesController, impresora_controller_1.ImpresoraController
+            trabajadores_controller_1.TrabajadoresController, caja_controller_1.CajaController, clientes_controller_1.ClientesController, impresora_controller_1.ImpresoraController, devoluciones_controller_1.DevolucionesController
         ],
         providers: [sockets_gateway_1.SocketGateway]
     })

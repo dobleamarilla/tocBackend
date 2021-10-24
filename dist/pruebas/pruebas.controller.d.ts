@@ -1,3 +1,3 @@
 export declare class PruebasController {
-    test(): void;
+    test(params: any): Promise<unknown>;
 }

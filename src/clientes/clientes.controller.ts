@@ -1,4 +1,6 @@
 import { Controller, Post, Body } from '@nestjs/common';
+import axios from 'axios';
+import { parametrosInstance } from '../parametros/parametros.clase';
 import { clienteInstance } from './clientes.clase';
 
 @Controller('clientes')
@@ -27,4 +29,19 @@ export class ClientesController {
         }
         return clienteInstance.buscar(params.busqueda);
     }
+
+    @Post('comprobarVIP')
+    comprobarVIP(@Body() params) {
+        const parametros = parametrosInstance.getParametros();
+        return axios.post('clientes/comprobarVIP', { idCliente: params.idCliente, parametros }).then((res: any) => {
+            if (res.data.error === false) {
+                return { error: false, info: res.data.info };
+            } else {
+                return { error: true, mensaje: res.data.mensaje };
+            }
+        }).catch((err) => {
+            console.log(err);
+            return { error: true, mensaje: 'Error en backend comprobarVIP'};
+        });
+    }    
 }

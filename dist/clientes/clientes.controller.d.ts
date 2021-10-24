@@ -15,4 +15,16 @@ export declare class ClientesController {
         error: boolean;
         mensaje: string;
     };
+    comprobarVIP(params: any): Promise<{
+        error: boolean;
+        info: any;
+        mensaje?: undefined;
+    } | {
+        error: boolean;
+        mensaje: any;
+        info?: undefined;
+    } | {
+        error: boolean;
+        mensaje: string;
+    }>;
 }

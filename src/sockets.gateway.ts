@@ -19,10 +19,10 @@ export class SocketGateway{
   @WebSocketServer()
   server;
 
-    @SubscribeMessage('test')
-    test() {
-        this.server.emit('test', 'O Rei Eze');
-    }
+    // @SubscribeMessage('test')
+    // test() {
+    //   this.server.emit('test', 'O Rei Eze');
+    // }
 
 //   @SubscribeMessage('enviarAlDatafono')
 //   async cobrarConClearone(@MessageBody() params) {

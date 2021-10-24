@@ -13,20 +13,11 @@ exports.ese = exports.SocketGateway = void 0;
 const websockets_1 = require("@nestjs/websockets");
 const net = require('net');
 let SocketGateway = class SocketGateway {
-    test() {
-        this.server.emit('test', 'O Rei Eze');
-    }
 };
 __decorate([
     (0, websockets_1.WebSocketServer)(),
     __metadata("design:type", Object)
 ], SocketGateway.prototype, "server", void 0);
-__decorate([
-    (0, websockets_1.SubscribeMessage)('test'),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], SocketGateway.prototype, "test", null);
 SocketGateway = __decorate([
     (0, websockets_1.WebSocketGateway)({
         cors: {

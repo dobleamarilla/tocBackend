@@ -4,7 +4,7 @@ export declare class TicketsClase {
     getTicketsIntervalo(fechaInicio: number, fechaFinal: number): Promise<TicketsInterface[]>;
     getUltimoTicket(): Promise<number>;
     insertarTicket(ticket: TicketsInterface): Promise<boolean>;
-    crearTicketEfectivo(total: number, idCesta: number): Promise<boolean>;
-    crearTicketDatafono3G(total: number, idCesta: number): Promise<boolean>;
+    crearTicketEfectivo(total: number, idCesta: number, idCliente: string): Promise<boolean>;
+    crearTicketDatafono3G(total: number, idCesta: number, idCliente: string): Promise<boolean>;
 }
 export declare const ticketsInstance: TicketsClase;

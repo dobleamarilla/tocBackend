@@ -26,6 +26,10 @@ let ParametrosController = class ParametrosController {
             return { todoInstalado: false };
         }
     }
+    getParametros() {
+        const parametros = parametros_clase_1.parametrosInstance.getParametros();
+        return { error: false, parametros };
+    }
 };
 __decorate([
     (0, common_1.Post)('todoInstalado'),
@@ -33,6 +37,12 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], ParametrosController.prototype, "todoInstalado", null);
+__decorate([
+    (0, common_1.Post)('getParametros'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], ParametrosController.prototype, "getParametros", null);
 ParametrosController = __decorate([
     (0, common_1.Controller)('parametros')
 ], ParametrosController);

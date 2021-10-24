@@ -15,4 +15,10 @@ export class ParametrosController {
             return { todoInstalado: false };
         }
     }
+
+    @Post('getParametros')
+    getParametros() {
+        const parametros = parametrosInstance.getParametros();
+        return { error: false, parametros };      
+    }
 }

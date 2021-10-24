@@ -6,4 +6,8 @@ export declare class ParametrosController {
         todoInstalado: boolean;
         config?: undefined;
     };
+    getParametros(): {
+        error: boolean;
+        parametros: import("./parametros.interface").ParametrosInterface;
+    };
 }

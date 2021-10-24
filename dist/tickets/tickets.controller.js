@@ -31,63 +31,56 @@ let TicketsController = class TicketsController {
         });
     }
     crearTicketEfectivo(params) {
-        return tickets_clase_1.ticketsInstance.crearTicketEfectivo(params.total, params.idCesta).then((res) => {
-            if (res) {
+        if (params.total != undefined && params.idCesta != undefined && params.idCliente != undefined) {
+            return tickets_clase_1.ticketsInstance.crearTicketEfectivo(params.total, params.idCesta, params.idCliente).then((res) => {
+                if (res) {
+                    return {
+                        error: false
+                    };
+                }
+                else {
+                    return {
+                        error: true,
+                        mensaje: 'Error en crearTicketEfectivo'
+                    };
+                }
+            }).catch((err) => {
+                console.log(err);
                 return {
-                    error: false
+                    error: true,
+                    mensaje: 'Error. Comprobar log nest'
                 };
-            }
-            else {
-                return {
-                    error: true
-                };
-            }
-        }).catch((err) => {
-            console.log(err);
-            return {
-                error: true
-            };
-        });
+            });
+        }
+        else {
+            return { error: true, mensaje: 'Faltan datos' };
+        }
     }
     crearTicketDatafono3G(params) {
-        return tickets_clase_1.ticketsInstance.crearTicketDatafono3G(params.total, params.idCesta).then((res) => {
-            if (res) {
-                console.log('ENTRO EN ERROR = false');
+        if (params.total != undefined && params.idCesta != undefined && params.idCliente != undefined) {
+            return tickets_clase_1.ticketsInstance.crearTicketDatafono3G(params.total, params.idCesta, params.idCliente).then((res) => {
+                if (res) {
+                    return {
+                        error: false
+                    };
+                }
+                else {
+                    return {
+                        error: true,
+                        mensaje: 'Error en crearTicketDatafono3G'
+                    };
+                }
+            }).catch((err) => {
+                console.log(err);
                 return {
-                    error: false
+                    error: true,
+                    mensaje: 'Error. Comprobar log nest'
                 };
-            }
-            else {
-                console.log('ENTRO EN ERROR = true');
-                return {
-                    error: true
-                };
-            }
-        }).catch((err) => {
-            console.log(err);
-            return {
-                error: true
-            };
-        });
-    }
-    crearTicketDatafonoClearOne(params) {
-        return tickets_clase_1.ticketsInstance.crearTicketDatafono3G(params.total, params.idCesta).then((res) => {
-            if (res) {
-                return {
-                    error: false
-                };
-            }
-            else {
-                return {
-                    error: true
-                };
-            }
-        }).catch((err) => {
-            console.log(err);
-            return {
-                error: true
-            };
-        });
+            });
+        }
+        else {
+            return { error: true, mensaje: 'Faltan datos' };
+        }
     }
 };
 __decorate([
@@ -111,13 +104,6 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], TicketsController.prototype, "crearTicketDatafono3G", null);
-__decorate([
-    (0, common_1.Post)('crearTicketDatafonoClearOne'),
-    __param(0, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
-], TicketsController.prototype, "crearTicketDatafonoClearOne", null);
 TicketsController = __decorate([
     (0, common_1.Controller)('tickets')
 ], TicketsController);

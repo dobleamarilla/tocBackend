@@ -21,63 +21,73 @@ export class TicketsController {
 
     @Post('crearTicketEfectivo')
     crearTicketEfectivo(@Body() params) {
-        return ticketsInstance.crearTicketEfectivo(params.total, params.idCesta).then((res) => {
-            if (res) {
-                return {
-                    error: false
+        if (params.total != undefined && params.idCesta != undefined && params.idCliente != undefined) {
+            return ticketsInstance.crearTicketEfectivo(params.total, params.idCesta, params.idCliente).then((res) => {
+                if (res) {
+                    return {
+                        error: false
+                    }
+                } else {
+                    return {
+                        error: true,
+                        mensaje: 'Error en crearTicketEfectivo'
+                    }
                 }
-            } else {
+            }).catch((err) => {
+                console.log(err);
                 return {
-                    error: true
+                    error: true,
+                    mensaje: 'Error. Comprobar log nest'
                 }
-            }
-        }).catch((err) => {
-            console.log(err);
-            return {
-                error: true
-            }
-        });
+            });
+        } else {
+            return { error: true, mensaje: 'Faltan datos'};
+        }
     }
 
     @Post('crearTicketDatafono3G')
     crearTicketDatafono3G(@Body() params) {
-        return ticketsInstance.crearTicketDatafono3G(params.total, params.idCesta).then((res) => {
-            if (res) {
-                console.log('ENTRO EN ERROR = false');
-                return {
-                    error: false
+        if (params.total != undefined && params.idCesta != undefined && params.idCliente != undefined) {
+            return ticketsInstance.crearTicketDatafono3G(params.total, params.idCesta, params.idCliente).then((res) => {
+                if (res) {
+                    return {
+                        error: false
+                    }
+                } else {
+                    return {
+                        error: true,
+                        mensaje: 'Error en crearTicketDatafono3G'
+                    }
                 }
-            } else {
-                console.log('ENTRO EN ERROR = true');
+            }).catch((err) => {
+                console.log(err);
                 return {
-                    error: true
+                    error: true,
+                    mensaje: 'Error. Comprobar log nest'
                 }
-            }
-        }).catch((err) => {
-            console.log(err);
-            return {
-                error: true
-            }
-        });
+            });
+        } else {
+            return { error: true, mensaje: 'Faltan datos'};
+        }
     }
 
-    @Post('crearTicketDatafonoClearOne')
-    crearTicketDatafonoClearOne(@Body() params) {
-        return ticketsInstance.crearTicketDatafono3G(params.total, params.idCesta).then((res) => {
-            if (res) {
-                return {
-                    error: false
-                }
-            } else {
-                return {
-                    error: true
-                }
-            }
-        }).catch((err) => {
-            console.log(err);
-            return {
-                error: true
-            }
-        });
-    }
+    // @Post('crearTicketDatafonoClearOne')
+    // crearTicketDatafonoClearOne(@Body() params) {
+    //     return ticketsInstance.crearTicketDatafono3G(params.total, params.idCesta).then((res) => {
+    //         if (res) {
+    //             return {
+    //                 error: false
+    //             }
+    //         } else {
+    //             return {
+    //                 error: true
+    //             }
+    //         }
+    //     }).catch((err) => {
+    //         console.log(err);
+    //         return {
+    //             error: true
+    //         }
+    //     });
+    // }
 }

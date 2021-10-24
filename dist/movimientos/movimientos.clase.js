@@ -4,8 +4,8 @@ exports.movimientosInstance = exports.MovimientosClase = void 0;
 const parametros_clase_1 = require("../parametros/parametros.clase");
 const schMovimientos = require("./movimientos.mongodb");
 const impresora_class_1 = require("../impresora/impresora.class");
-const moment_1 = require("moment");
 const trabajadores_clase_1 = require("../trabajadores/trabajadores.clase");
+const moment = require('moment');
 const Ean13Utils = require('ean13-lib').Ean13Utils;
 const TIPO_ENTRADA = 'ENTRADA';
 const TIPO_SALIDA = 'SALIDA';
@@ -28,7 +28,7 @@ class MovimientosClase {
     getMovimientosIntervalo(inicioTime, finalTime) {
         return schMovimientos.getMovimientosIntervalo(inicioTime, finalTime);
     }
-    async nuevaSalida(cantidad, concepto, tipoExtra, noImprimir = false, idTicket = -100) {
+    async nuevaSalida(cantidad, concepto, tipoExtra, imprimir = true, idTicket = -100) {
         const parametros = parametros_clase_1.parametrosInstance.getParametros();
         let codigoBarras = "";
         try {
@@ -43,22 +43,50 @@ class MovimientosClase {
         const objSalida = {
             _id: Date.now(),
             tipo: TIPO_SALIDA,
-            valor: cantidad,
+            valor: Number(cantidad),
             concepto: concepto,
             idTrabajador: (await trabajadores_clase_1.trabajadoresInstance.getCurrentTrabajador())._id,
             codigoBarras: codigoBarras,
             tipoExtra: tipoExtra,
-            idTicket: idTicket
+            idTicket: idTicket,
+            enviado: false,
+            enTransito: false
         };
         const resNuevaSalida = await schMovimientos.nuevaSalida(objSalida);
-        if (!resNuevaSalida.acknowledged)
-            throw 'Error en nuevaSalida';
-        if (!noImprimir) {
-            impresora_class_1.impresoraInstance.imprimirSalida(objSalida.valor, objSalida._id, (await trabajadores_clase_1.trabajadoresInstance.getCurrentTrabajador()).nombre, parametros.nombreTienda, objSalida.concepto, parametros.tipoImpresora, codigoBarras);
+        if (resNuevaSalida.acknowledged) {
+            if (imprimir) {
+                impresora_class_1.impresoraInstance.imprimirSalida(objSalida.valor, objSalida._id, (await trabajadores_clase_1.trabajadoresInstance.getCurrentTrabajador()).nombre, parametros.nombreTienda, objSalida.concepto, parametros.tipoImpresora, codigoBarras);
+            }
+            return true;
+        }
+        else {
+            return false;
         }
     }
-    async nuevaEntrada() {
-        return true;
+    async nuevaEntrada(cantidad, concepto, imprimir = true) {
+        const parametros = parametros_clase_1.parametrosInstance.getParametros();
+        const objSalida = {
+            _id: Date.now(),
+            tipo: TIPO_ENTRADA,
+            valor: Number(cantidad),
+            concepto: concepto,
+            idTrabajador: (await trabajadores_clase_1.trabajadoresInstance.getCurrentTrabajador())._id,
+            codigoBarras: '',
+            tipoExtra: TIPO_ENTRADA,
+            idTicket: -100,
+            enviado: false,
+            enTransito: false
+        };
+        const resNuevaSalida = await schMovimientos.nuevaSalida(objSalida);
+        if (resNuevaSalida.acknowledged) {
+            if (imprimir) {
+                impresora_class_1.impresoraInstance.imprimirEntrada(objSalida.valor, objSalida._id, (await trabajadores_clase_1.trabajadoresInstance.getCurrentTrabajador()).nombre);
+            }
+            return true;
+        }
+        else {
+            return false;
+        }
     }
     async generarCodigoBarrasSalida() {
         const parametros = parametros_clase_1.parametrosInstance.getParametros();
@@ -80,7 +108,7 @@ class MovimientosClase {
         let strNumeroCodigosDeBarras = getNumeroTresDigitos(objCodigoBarras);
         let codigoFinal = '';
         let digitYear = new Date().getFullYear().toString()[3];
-        codigoFinal = `98${codigoLicenciaStr}${digitYear}${getNumeroTresDigitos((0, moment_1.default)().dayOfYear())}${strNumeroCodigosDeBarras}`;
+        codigoFinal = `98${codigoLicenciaStr}${digitYear}${getNumeroTresDigitos(moment().dayOfYear())}${strNumeroCodigosDeBarras}`;
         return codigoFinal;
     }
 }

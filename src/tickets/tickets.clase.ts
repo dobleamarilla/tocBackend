@@ -48,7 +48,7 @@ export class TicketsClase {
         });
     }
 
-    async crearTicketEfectivo(total: number, idCesta: number) {
+    async crearTicketEfectivo(total: number, idCesta: number, idCliente: string) {
         const infoTrabajador = await trabajadoresInstance.getCurrentTrabajador();
         const nuevoIdTicket = (await this.getUltimoTicket()) + 1;
         const cesta = await cestas.getCesta(idCesta);
@@ -66,7 +66,7 @@ export class TicketsClase {
             tipoPago: "EFECTIVO",
             idTrabajador: infoTrabajador._id,
             tiposIva: cesta.tiposIva,
-            cliente: null, // DE MOMENTO NULL PARA TODOS LOS CLIENTES
+            cliente: (idCliente != '' && idCliente != null) ? (idCliente) : (null),
             infoClienteVip: {
                 esVip : false,
                 nif: '',
@@ -94,7 +94,7 @@ export class TicketsClase {
         return false;
     }
 
-    async crearTicketDatafono3G(total: number, idCesta: number) {
+    async crearTicketDatafono3G(total: number, idCesta: number, idCliente: string) {
         const infoTrabajador = await trabajadoresInstance.getCurrentTrabajador();
         const nuevoIdTicket = (await this.getUltimoTicket()) + 1;
         const cesta = await cestas.getCesta(idCesta);
@@ -112,7 +112,7 @@ export class TicketsClase {
             tipoPago: "TARJETA",
             idTrabajador: infoTrabajador._id,
             tiposIva: cesta.tiposIva,
-            cliente: null, // DE MOMENTO NULL PARA TODOS LOS CLIENTES
+            cliente: (idCliente != '' && idCliente != null) ? (idCliente) : (null),
             infoClienteVip: {
                 esVip : false,
                 nif: '',

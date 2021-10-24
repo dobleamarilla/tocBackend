@@ -6,5 +6,7 @@ export interface MovimientosInterface {
     idTrabajador: number,
     tipoExtra: string,
     codigoBarras: string,
-    idTicket: number
+    idTicket: number,
+    enviado: boolean,
+    enTransito: boolean
 }

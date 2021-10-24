@@ -1,6 +1,5 @@
-export declare class TicketsController {
-    getTicketsIntervalo(params: any): Promise<any[]>;
-    crearTicketEfectivo(params: any): Promise<{
+export declare class MovimientosController {
+    nuevaSalida(params: any): Promise<{
         error: boolean;
         mensaje?: undefined;
     } | {
@@ -13,7 +12,7 @@ export declare class TicketsController {
         error: boolean;
         mensaje: string;
     };
-    crearTicketDatafono3G(params: any): Promise<{
+    nuevaEntrada(params: any): Promise<{
         error: boolean;
         mensaje?: undefined;
     } | {

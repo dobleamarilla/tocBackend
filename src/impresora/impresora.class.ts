@@ -322,5 +322,49 @@ export class Impresora {
             console.log(err);
         }
     }
+
+    imprimirEntrada(totalIngresado: number, fecha: number, nombreDependienta: string) {
+        const parametros = parametrosInstance.getParametros();
+        try  {
+            const fechaStr = dateToString2(fecha);
+            exec('echo sa | sudo -S sh /home/hit/tocGame/scripts/permisos.sh');
+            if(parametros.tipoImpresora === 'USB') {
+                var device = new escpos.USB('0x4B8', '0x202'); // USB
+            }
+            else if(parametros.tipoImpresora === 'SERIE') {
+                var device = new escpos.Serial('/dev/ttyS0', {
+                    baudRate: 115000,
+                    stopBit: 2
+                });
+            }
+
+            var options = { encoding: "GB18030" };
+            var printer = new escpos.Printer(device, options);
+            device.open(function () {
+                printer
+                    .font('a')
+                    .style('b')
+                    .align('CT')
+                    .size(0, 0)
+                    .text(parametros.nombreTienda)
+                    .text(fechaStr)
+                    .text("Dependienta: " + nombreDependienta)
+                    .text("Ingreso efectivo: " + totalIngresado)
+                    .size(1, 1)
+                    .text(totalIngresado)
+                    .size(0, 0)
+                    .text('')
+                    .size(1, 1)
+                    .text('')
+                    .text('')
+                    .text('')
+                    .cut()
+                    .close()
+            });
+        }
+        catch (err) {
+            console.log(err);
+        }
+    }
 }
 export const impresoraInstance = new Impresora();

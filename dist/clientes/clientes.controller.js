@@ -19,6 +19,26 @@ let ClientesController = class ClientesController {
     buscarCliente(params) {
         return clientes_clase_1.clienteInstance.buscar(params.busqueda);
     }
+    getClienteByID(params) {
+        console.log(params);
+        if (params.idCliente != undefined) {
+            return clientes_clase_1.clienteInstance.getClienteByID(params.idCliente).then((res) => {
+                if (res != null) {
+                    return { error: false, infoCliente: res };
+                }
+                else {
+                    return { error: true, mensaje: 'Error. Este cliente no existe en la BBDD' };
+                }
+            }).catch((err) => {
+                console.log(err);
+                return { error: true, mensaje: 'Error en getClienteByID' };
+            });
+        }
+        else {
+            return { error: true, mensaje: 'Error, faltan datos' };
+        }
+        return clientes_clase_1.clienteInstance.buscar(params.busqueda);
+    }
 };
 __decorate([
     (0, common_1.Post)('buscar'),
@@ -27,6 +47,13 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], ClientesController.prototype, "buscarCliente", null);
+__decorate([
+    (0, common_1.Post)('getClienteByID'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], ClientesController.prototype, "getClienteByID", null);
 ClientesController = __decorate([
     (0, common_1.Controller)('clientes')
 ], ClientesController);

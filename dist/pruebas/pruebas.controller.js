@@ -9,34 +9,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ese = exports.SocketGateway = void 0;
-const websockets_1 = require("@nestjs/websockets");
-const net = require('net');
-let SocketGateway = class SocketGateway {
+exports.PruebasController = void 0;
+const common_1 = require("@nestjs/common");
+const sockets_gateway_1 = require("../sockets.gateway");
+let PruebasController = class PruebasController {
     test() {
-        this.server.emit('test', 'O Rei Eze');
+        sockets_gateway_1.ese.test();
     }
 };
 __decorate([
-    (0, websockets_1.WebSocketServer)(),
-    __metadata("design:type", Object)
-], SocketGateway.prototype, "server", void 0);
-__decorate([
-    (0, websockets_1.SubscribeMessage)('test'),
+    (0, common_1.Post)('test'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
-], SocketGateway.prototype, "test", null);
-SocketGateway = __decorate([
-    (0, websockets_1.WebSocketGateway)({
-        cors: {
-            origin: true,
-            credentials: true,
-            transports: ['websocket', 'polling'],
-        },
-        allowEIO3: true
-    })
-], SocketGateway);
-exports.SocketGateway = SocketGateway;
-exports.ese = new SocketGateway();
-//# sourceMappingURL=sockets.gateway.js.map
+], PruebasController.prototype, "test", null);
+PruebasController = __decorate([
+    (0, common_1.Controller)('pruebas')
+], PruebasController);
+exports.PruebasController = PruebasController;
+//# sourceMappingURL=pruebas.controller.js.map

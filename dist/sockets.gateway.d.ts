@@ -1,4 +1,5 @@
 export declare class SocketGateway {
     server: any;
-    cobrarConClearone(params: any): Promise<void>;
+    test(): void;
 }
+export declare const ese: SocketGateway;

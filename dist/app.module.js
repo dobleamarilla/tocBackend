@@ -23,6 +23,7 @@ const impresora_controller_1 = require("./impresora/impresora.controller");
 const sockets_gateway_1 = require("./sockets.gateway");
 const devoluciones_controller_1 = require("./devoluciones/devoluciones.controller");
 const movimientos_controller_1 = require("./movimientos/movimientos.controller");
+const pruebas_controller_1 = require("./pruebas/pruebas.controller");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -39,7 +40,7 @@ AppModule = __decorate([
             cestas_controller_1.CestasController,
             parametros_controller_1.ParametrosController,
             tickets_controller_1.TicketsController,
-            trabajadores_controller_1.TrabajadoresController, caja_controller_1.CajaController, clientes_controller_1.ClientesController, impresora_controller_1.ImpresoraController, devoluciones_controller_1.DevolucionesController, movimientos_controller_1.MovimientosController
+            trabajadores_controller_1.TrabajadoresController, caja_controller_1.CajaController, clientes_controller_1.ClientesController, impresora_controller_1.ImpresoraController, devoluciones_controller_1.DevolucionesController, movimientos_controller_1.MovimientosController, pruebas_controller_1.PruebasController
         ],
         providers: [sockets_gateway_1.SocketGateway]
     })

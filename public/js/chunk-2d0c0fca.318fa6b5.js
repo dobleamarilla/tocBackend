@@ -1,2 +1,0 @@
-(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d0c0fca"],{"43b7":function(e,o,t){"use strict";t.r(o);var c=t("7a23"),n={class:"col"},i=Object(c["h"])("iframe",{src:"http://silema.hiterp.com/TpvWebReposicion.asp?modo=MENU&codiBotiga=842",style:{position:"absolute",height:"90%",width:"100%",border:"none"}},null,-1);function s(e,o){return Object(c["r"])(),Object(c["d"])("div",n,[i])}var r=t("6b0d"),a=t.n(r);const d={},p=a()(d,[["render",s]]);o["default"]=p}}]);
-//# sourceMappingURL=chunk-2d0c0fca.318fa6b5.js.map

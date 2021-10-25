@@ -60,7 +60,6 @@ export class Impresora {
 
         if(infoTicket.cliente != null && infoTicket.tipoPago != 'DEUDA' && infoTicket.cliente != undefined) {
             const infoClienteAux = await clienteInstance.getClienteByID(infoTicket.cliente);
-            console.log("HEEEEY!: ", infoClienteAux);
             const infoCliente = infoClienteAux;
             var auxNombre = '';
 
@@ -86,6 +85,7 @@ export class Impresora {
                     puntos: 0
                 }
             };
+            this._venta(sendObject);
         }
         else {
             sendObject = {
@@ -107,7 +107,6 @@ export class Impresora {
     }
 
     private async _venta(info) {
-        console.log("VEAMOS: ", info);
         const numFactura = info.numFactura;
         const arrayCompra = info.arrayCompra;
         const total = info.total;

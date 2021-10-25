@@ -52,7 +52,6 @@ class Impresora {
         var sendObject;
         if (infoTicket.cliente != null && infoTicket.tipoPago != 'DEUDA' && infoTicket.cliente != undefined) {
             const infoClienteAux = await clientes_clase_1.clienteInstance.getClienteByID(infoTicket.cliente);
-            console.log("HEEEEY!: ", infoClienteAux);
             const infoCliente = infoClienteAux;
             var auxNombre = '';
             if (infoCliente != null) {
@@ -77,6 +76,7 @@ class Impresora {
                     puntos: 0
                 }
             };
+            this._venta(sendObject);
         }
         else {
             sendObject = {
@@ -96,7 +96,6 @@ class Impresora {
         }
     }
     async _venta(info) {
-        console.log("VEAMOS: ", info);
         const numFactura = info.numFactura;
         const arrayCompra = info.arrayCompra;
         const total = info.total;

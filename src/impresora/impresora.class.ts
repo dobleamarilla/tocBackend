@@ -107,6 +107,7 @@ export class Impresora {
     }
 
     private async _venta(info) {
+        console.log("VEAMOS: ", info);
         const numFactura = info.numFactura;
         const arrayCompra = info.arrayCompra;
         const total = info.total;

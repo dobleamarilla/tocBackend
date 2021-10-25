@@ -58,8 +58,10 @@ export class Impresora {
         const parametros = parametrosInstance.getParametros();
         var sendObject;
 
-        if(infoTicket.cliente != null && infoTicket.tipoPago != 'DEUDA') {
-            const infoCliente = await clienteInstance.getClienteByID(infoTicket.cliente);
+        if(infoTicket.cliente != null && infoTicket.tipoPago != 'DEUDA' && infoTicket.cliente != undefined) {
+            const infoClienteAux = await clienteInstance.getClienteByID(infoTicket.cliente);
+            console.log("HEEEEY!: ", infoClienteAux);
+            const infoCliente = infoClienteAux;
             var auxNombre = '';
 
             if(infoCliente != null) {

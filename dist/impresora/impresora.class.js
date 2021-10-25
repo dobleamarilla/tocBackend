@@ -50,8 +50,10 @@ class Impresora {
         const infoTrabajador = await trabajadores_clase_1.trabajadoresInstance.getTrabajador(infoTicket.idTrabajador);
         const parametros = parametros_clase_1.parametrosInstance.getParametros();
         var sendObject;
-        if (infoTicket.cliente != null && infoTicket.tipoPago != 'DEUDA') {
-            const infoCliente = await clientes_clase_1.clienteInstance.getClienteByID(infoTicket.cliente);
+        if (infoTicket.cliente != null && infoTicket.tipoPago != 'DEUDA' && infoTicket.cliente != undefined) {
+            const infoClienteAux = await clientes_clase_1.clienteInstance.getClienteByID(infoTicket.cliente);
+            console.log("HEEEEY!: ", infoClienteAux);
+            const infoCliente = infoClienteAux;
             var auxNombre = '';
             if (infoCliente != null) {
                 auxNombre = infoCliente.nombre;

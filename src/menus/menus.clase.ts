@@ -1,24 +1,27 @@
 import * as schMenus from "./menus.mongodb";
 
 export class MenusClase {
-    private stopNecesario: boolean;
+    private bloqueado: boolean;
 
     constructor() {
-        this.stopNecesario = false;
+        this.bloqueado = false;
     }
 
     clickMenu(nombreMenu: string) {
         return schMenus.getTecladoMain(nombreMenu);
     }
 
-    getStopNecesario() {
-        return this.stopNecesario;
+    getBloqueado() {
+        return this.bloqueado;
     }
 
     getMenus() {
         return schMenus.getMenus();
     }
-
+    
+    setBloqueado(x: boolean) {
+        this.bloqueado = x;
+    }
 }
 
 export const menusInstance = new MenusClase();

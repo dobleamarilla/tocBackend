@@ -4,16 +4,19 @@ exports.menusInstance = exports.MenusClase = void 0;
 const schMenus = require("./menus.mongodb");
 class MenusClase {
     constructor() {
-        this.stopNecesario = false;
+        this.bloqueado = false;
     }
     clickMenu(nombreMenu) {
         return schMenus.getTecladoMain(nombreMenu);
     }
-    getStopNecesario() {
-        return this.stopNecesario;
+    getBloqueado() {
+        return this.bloqueado;
     }
     getMenus() {
         return schMenus.getMenus();
+    }
+    setBloqueado(x) {
+        this.bloqueado = x;
     }
 }
 exports.MenusClase = MenusClase;

@@ -17,13 +17,16 @@ const common_1 = require("@nestjs/common");
 const menus_clase_1 = require("./menus.clase");
 let MenusController = class MenusController {
     clickMenu(params) {
-        if (menus_clase_1.menusInstance.getStopNecesario() == false) {
+        if (menus_clase_1.menusInstance.getBloqueado() == false) {
+            menus_clase_1.menusInstance.setBloqueado(true);
             return menus_clase_1.menusInstance.clickMenu(params.nombreMenu).then((res) => {
+                menus_clase_1.menusInstance.setBloqueado(false);
                 return {
                     bloqueado: false,
                     resultado: res
                 };
             }).catch((err) => {
+                menus_clase_1.menusInstance.setBloqueado(false);
                 return {
                     bloqueado: false,
                     error: err
@@ -38,7 +41,7 @@ let MenusController = class MenusController {
     }
     getMenus() {
         return menus_clase_1.menusInstance.getMenus().then((resultado) => {
-            if (menus_clase_1.menusInstance.getStopNecesario() == false) {
+            if (menus_clase_1.menusInstance.getBloqueado() == false) {
                 return { bloqueado: false, resultado: resultado };
             }
             else {

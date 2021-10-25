@@ -1,8 +1,9 @@
 export declare class MenusClase {
-    private stopNecesario;
+    private bloqueado;
     constructor();
     clickMenu(nombreMenu: string): Promise<any>;
-    getStopNecesario(): boolean;
+    getBloqueado(): boolean;
     getMenus(): Promise<any>;
+    setBloqueado(x: boolean): void;
 }
 export declare const menusInstance: MenusClase;

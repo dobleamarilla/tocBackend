@@ -5,13 +5,16 @@ import { menusInstance } from './menus.clase';
 export class MenusController {
     @Post('clickMenu')
     clickMenu(@Body() params) {
-        if (menusInstance.getStopNecesario() == false) {
+        if (menusInstance.getBloqueado() == false) {
+            menusInstance.setBloqueado(true);
             return menusInstance.clickMenu(params.nombreMenu).then((res) => {
+                menusInstance.setBloqueado(false);
                 return {
                     bloqueado: false,
                     resultado: res
                 };
             }).catch((err) => {
+                menusInstance.setBloqueado(false);
                 return {
                     bloqueado: false,
                     error: err
@@ -27,7 +30,7 @@ export class MenusController {
     @Post('getMenus')
     getMenus() {
         return menusInstance.getMenus().then((resultado) => {
-            if(menusInstance.getStopNecesario() == false) {
+            if(menusInstance.getBloqueado() == false) {
                 return {bloqueado: false, resultado: resultado};
             }
             else {

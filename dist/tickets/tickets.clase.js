@@ -123,7 +123,7 @@ class TicketsClase {
         if (await this.insertarTicket(objTicket)) {
             if (await cestas_clase_1.cestas.borrarCesta(idCesta)) {
                 if (await parametros_clase_1.parametrosInstance.setUltimoTicket(objTicket._id)) {
-                    movimientos_clase_1.movimientosInstance.nuevaSalida(objTicket.total, 'Targeta 3G', 'TARJETA', true, objTicket._id);
+                    movimientos_clase_1.movimientosInstance.nuevaSalida(objTicket.total, 'Targeta 3G', 'TARJETA', false, objTicket._id);
                     return true;
                 }
                 else {

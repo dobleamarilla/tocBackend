@@ -12,23 +12,37 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PruebasController = void 0;
+exports.InstaladorController = void 0;
 const common_1 = require("@nestjs/common");
 const axios_1 = require("axios");
-let PruebasController = class PruebasController {
-    test(params) {
-        return axios_1.default.post('datos/test');
+let InstaladorController = class InstaladorController {
+    instalador(params) {
+        return axios_1.default.post('parametros/instaladorLicencia', {
+            password: params.password,
+            numLlicencia: params.numLlicencia
+        }).then((res) => {
+            if (!res.data.error) {
+                return { error: false, info: res.data.info };
+            }
+            else {
+                return { error: true, mensaje: res.data.mensaje };
+            }
+            return {};
+        }).catch((err) => {
+            console.log(err);
+            return { error: true, mensaje: 'Error en pedir parametros/instaladorLicencia' };
+        });
     }
 };
 __decorate([
-    (0, common_1.Post)('test'),
+    (0, common_1.Post)('pedirDatos'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
-], PruebasController.prototype, "test", null);
-PruebasController = __decorate([
-    (0, common_1.Controller)('pruebas')
-], PruebasController);
-exports.PruebasController = PruebasController;
-//# sourceMappingURL=pruebas.controller.js.map
+], InstaladorController.prototype, "instalador", null);
+InstaladorController = __decorate([
+    (0, common_1.Controller)('instalador')
+], InstaladorController);
+exports.InstaladorController = InstaladorController;
+//# sourceMappingURL=instalador.controller.js.map

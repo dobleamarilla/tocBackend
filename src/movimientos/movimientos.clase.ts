@@ -108,6 +108,12 @@ export class MovimientosClase {
 
     private async generarCodigoBarrasSalida() {
         const parametros = parametrosInstance.getParametros();
+        const ultimoCodigoDeBarras = await schMovimientos.getUltimoCodigoBarras();
+        if (ultimoCodigoDeBarras == null) {
+            if((await schMovimientos.resetContadorCodigoBarras()).acknowledged == false)
+                throw 'Error en inicializar contador de codigo de barras';
+        }
+
         let objCodigoBarras = (await schMovimientos.getUltimoCodigoBarras()).ultimo;
         if(objCodigoBarras == 999) {
             const resResetContador = await schMovimientos.resetContadorCodigoBarras();

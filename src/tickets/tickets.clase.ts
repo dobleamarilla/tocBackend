@@ -139,7 +139,53 @@ export class TicketsClase {
             console.log("Error, no se ha podido insertar el ticket");
         }
         return false;
-    } 
+    }
+
+    async crearTicketDeuda(total: number, idCesta: number, idCliente: string, infoClienteVip: any) {
+        const infoTrabajador = await trabajadoresInstance.getCurrentTrabajador();
+        const nuevoIdTicket = (await this.getUltimoTicket()) + 1;
+        const cesta = await cestas.getCesta(idCesta);
+        console.log("La cesta es", cesta, idCesta);
+        if (cesta == null || cesta.lista.length == 0) {
+            console.log("Error, la cesta es null o está vacía");
+            return false;
+        }
+
+        const objTicket: TicketsInterface = {
+            _id: nuevoIdTicket,
+            timestamp: Date.now(),
+            total: total,
+            lista: cesta.lista,
+            tipoPago: "DEUDA",
+            idTrabajador: infoTrabajador._id,
+            tiposIva: cesta.tiposIva,
+            cliente: (idCliente != '' && idCliente != null) ? (idCliente) : (null), // Es clienteFinal
+            infoClienteVip: {
+                esVip : infoClienteVip.esVip,
+                nif: infoClienteVip.nif,
+                nombre: infoClienteVip.nombre,
+                cp: infoClienteVip.cp,
+                direccion: infoClienteVip.direccion,
+                ciudad: infoClienteVip.ciudad
+            }
+        }
+
+        if (await this.insertarTicket(objTicket)) {
+            if (await cestas.borrarCesta(idCesta)) {
+                if (await parametrosInstance.setUltimoTicket(objTicket._id)) {
+                    movimientosInstance.nuevaSalida(objTicket.total, `Deute client: ${objTicket._id}`, 'DEUDA', false, objTicket._id);
+                    return true;
+                } else {
+                    console.log("Error no se ha podido cambiar el último id ticket");
+                }
+            } else {
+                console.log("Error, no se ha podido borrar la cesta");
+            }
+        } else {
+            console.log("Error, no se ha podido insertar el ticket");
+        }
+        return false;
+    }
 }
 
 export const ticketsInstance = new TicketsClase();

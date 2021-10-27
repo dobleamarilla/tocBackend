@@ -139,6 +139,52 @@ class TicketsClase {
         }
         return false;
     }
+    async crearTicketDeuda(total, idCesta, idCliente, infoClienteVip) {
+        const infoTrabajador = await trabajadores_clase_1.trabajadoresInstance.getCurrentTrabajador();
+        const nuevoIdTicket = (await this.getUltimoTicket()) + 1;
+        const cesta = await cestas_clase_1.cestas.getCesta(idCesta);
+        console.log("La cesta es", cesta, idCesta);
+        if (cesta == null || cesta.lista.length == 0) {
+            console.log("Error, la cesta es null o está vacía");
+            return false;
+        }
+        const objTicket = {
+            _id: nuevoIdTicket,
+            timestamp: Date.now(),
+            total: total,
+            lista: cesta.lista,
+            tipoPago: "DEUDA",
+            idTrabajador: infoTrabajador._id,
+            tiposIva: cesta.tiposIva,
+            cliente: (idCliente != '' && idCliente != null) ? (idCliente) : (null),
+            infoClienteVip: {
+                esVip: infoClienteVip.esVip,
+                nif: infoClienteVip.nif,
+                nombre: infoClienteVip.nombre,
+                cp: infoClienteVip.cp,
+                direccion: infoClienteVip.direccion,
+                ciudad: infoClienteVip.ciudad
+            }
+        };
+        if (await this.insertarTicket(objTicket)) {
+            if (await cestas_clase_1.cestas.borrarCesta(idCesta)) {
+                if (await parametros_clase_1.parametrosInstance.setUltimoTicket(objTicket._id)) {
+                    movimientos_clase_1.movimientosInstance.nuevaSalida(objTicket.total, `Deute client: ${objTicket._id}`, 'DEUDA', false, objTicket._id);
+                    return true;
+                }
+                else {
+                    console.log("Error no se ha podido cambiar el último id ticket");
+                }
+            }
+            else {
+                console.log("Error, no se ha podido borrar la cesta");
+            }
+        }
+        else {
+            console.log("Error, no se ha podido insertar el ticket");
+        }
+        return false;
+    }
 }
 exports.TicketsClase = TicketsClase;
 exports.ticketsInstance = new TicketsClase();

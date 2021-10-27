@@ -32,7 +32,7 @@ class MovimientosClase {
         const parametros = parametros_clase_1.parametrosInstance.getParametros();
         let codigoBarras = "";
         try {
-            if (tipoExtra != 'TARJETA' && tipoExtra != 'TKRS') {
+            if (tipoExtra != 'TARJETA' && tipoExtra != 'TKRS' && tipoExtra != 'DEUDA') {
                 codigoBarras = await this.generarCodigoBarrasSalida();
                 codigoBarras = String(Ean13Utils.generate(codigoBarras));
             }

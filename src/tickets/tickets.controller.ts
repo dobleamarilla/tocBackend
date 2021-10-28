@@ -88,6 +88,23 @@ export class TicketsController {
         }
     }
 
+    @Post('crearTicketConsumoPersonal')
+    crearTicketConsumoPersonal(@Body() params) {
+        if (params.idCesta != undefined) {
+            return ticketsInstance.crearTicketConsumoPersonal(params.idCesta).then((res) => {
+                if (res) {
+                    return { error: false };
+                } 
+                return { error: true, mensaje: 'Backend: Error en tickets/crearTicketConsumoPersonal'};
+            }).catch((err) => {
+                console.log(err);
+                return { error: true, mensaje: 'Backend: Error en tickets/crearTicketConsumoPersonal CATCH'};
+            });
+        } else {
+            return { error: true, mensaje: 'Faltan datos en tickets/crearTicketConsumoPersonal'};
+        }
+    }
+
     // @Post('crearTicketDatafonoClearOne')
     // crearTicketDatafonoClearOne(@Body() params) {
     //     return ticketsInstance.crearTicketDatafono3G(params.total, params.idCesta).then((res) => {

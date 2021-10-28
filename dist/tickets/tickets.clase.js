@@ -185,6 +185,50 @@ class TicketsClase {
         }
         return false;
     }
+    async crearTicketConsumoPersonal(idCesta) {
+        const infoTrabajador = await trabajadores_clase_1.trabajadoresInstance.getCurrentTrabajador();
+        const nuevoIdTicket = (await this.getUltimoTicket()) + 1;
+        const cesta = await cestas_clase_1.cestas.getCesta(idCesta);
+        if (cesta == null || cesta.lista.length == 0) {
+            console.log("Error, la cesta es null o está vacía");
+            return false;
+        }
+        const objTicket = {
+            _id: nuevoIdTicket,
+            timestamp: Date.now(),
+            total: 0,
+            lista: cesta.lista,
+            tipoPago: "CONSUMO_PERSONAL",
+            idTrabajador: infoTrabajador._id,
+            tiposIva: cesta.tiposIva,
+            cliente: null,
+            infoClienteVip: {
+                esVip: false,
+                nif: '',
+                nombre: '',
+                cp: '',
+                direccion: '',
+                ciudad: ''
+            }
+        };
+        if (await this.insertarTicket(objTicket)) {
+            if (await cestas_clase_1.cestas.borrarCesta(idCesta)) {
+                if (await parametros_clase_1.parametrosInstance.setUltimoTicket(objTicket._id)) {
+                    return true;
+                }
+                else {
+                    console.log("Error no se ha podido cambiar el último id ticket");
+                }
+            }
+            else {
+                console.log("Error, no se ha podido borrar la cesta");
+            }
+        }
+        else {
+            console.log("Error, no se ha podido insertar el ticket");
+        }
+        return false;
+    }
 }
 exports.TicketsClase = TicketsClase;
 exports.ticketsInstance = new TicketsClase();

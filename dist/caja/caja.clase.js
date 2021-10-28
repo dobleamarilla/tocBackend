@@ -44,7 +44,7 @@ class CajaClase {
     }
     cajaAbierta() {
         return this.getInfoCaja().then((infoCaja) => {
-            if (infoCaja == null) {
+            if (infoCaja == null || infoCaja.inicioTime == null) {
                 return false;
             }
             else {
@@ -146,9 +146,8 @@ class CajaClase {
         }
     }
     borrarCaja() {
-        const unaCaja = cajaVacia;
-        return schCajas.setInfoCaja(unaCaja).then((result) => {
-            if (result.acknowledged) {
+        return schCajas.borrarCaja().then((result) => {
+            if (result) {
                 return true;
             }
             else {

@@ -98,7 +98,7 @@ export class SocketGateway{
           const nombreDependienta = '';
           const numeroTicket = info._id;
           const tipoOperacion = 1; //1=> VENTA
-          const importe = info.total; //EN CENTIMOS DE EURO
+          const importe = Number((info.total * 100).toFixed(2)).toString(); //EN CENTIMOS DE EURO
           const venta_t = `\x02${ventaCliente};${tienda};${tpv};ezequiel;${numeroTicket};${tipoOperacion};${importe};;;;;;;\x03`;
           console.log('cliente: ', ventaCliente, ' tienda: ', tienda, ' tpv: ', tpv, ' tipoOperacion: ', tipoOperacion, ' numeroTicket: ', numeroTicket, ' nombreDependienta: ', nombreDependienta, ' importe: ', importe);
           client.write(venta_t);

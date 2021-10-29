@@ -74,7 +74,9 @@ export class TicketsClase {
                 cp: '',
                 direccion: '',
                 ciudad: ''
-            }
+            },
+            enviado: false,
+            enTransito: false
         }
 
         console.log("ABRIR CAJÓN");
@@ -120,7 +122,9 @@ export class TicketsClase {
                 cp: '',
                 direccion: '',
                 ciudad: ''
-            }
+            },
+            enviado: false,
+            enTransito: false
         }
 
         console.log("ABRIR CAJÓN");
@@ -167,7 +171,9 @@ export class TicketsClase {
                 cp: infoClienteVip.cp,
                 direccion: infoClienteVip.direccion,
                 ciudad: infoClienteVip.ciudad
-            }
+            },
+            enTransito: false,
+            enviado: false
         }
 
         if (await this.insertarTicket(objTicket)) {
@@ -213,7 +219,9 @@ export class TicketsClase {
                 cp: '',
                 direccion: '',
                 ciudad: ''
-            }
+            },
+            enTransito: false,
+            enviado: false
         }
 
         if (await this.insertarTicket(objTicket)) {

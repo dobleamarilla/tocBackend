@@ -71,7 +71,9 @@ class TicketsClase {
                 cp: '',
                 direccion: '',
                 ciudad: ''
-            }
+            },
+            enviado: false,
+            enTransito: false
         };
         console.log("ABRIR CAJÓN");
         if (await this.insertarTicket(objTicket)) {
@@ -117,7 +119,9 @@ class TicketsClase {
                 cp: '',
                 direccion: '',
                 ciudad: ''
-            }
+            },
+            enviado: false,
+            enTransito: false
         };
         console.log("ABRIR CAJÓN");
         if (await this.insertarTicket(objTicket)) {
@@ -164,7 +168,9 @@ class TicketsClase {
                 cp: infoClienteVip.cp,
                 direccion: infoClienteVip.direccion,
                 ciudad: infoClienteVip.ciudad
-            }
+            },
+            enTransito: false,
+            enviado: false
         };
         if (await this.insertarTicket(objTicket)) {
             if (await cestas_clase_1.cestas.borrarCesta(idCesta)) {
@@ -209,7 +215,9 @@ class TicketsClase {
                 cp: '',
                 direccion: '',
                 ciudad: ''
-            }
+            },
+            enTransito: false,
+            enviado: false
         };
         if (await this.insertarTicket(objTicket)) {
             if (await cestas_clase_1.cestas.borrarCesta(idCesta)) {

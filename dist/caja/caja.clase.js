@@ -7,6 +7,7 @@ const schMonedas = require("../monedas/monedas.mongodb");
 const trabajadores_clase_1 = require("../trabajadores/trabajadores.clase");
 const parametros_clase_1 = require("../parametros/parametros.clase");
 const movimientos_clase_1 = require("../movimientos/movimientos.clase");
+const impresora_class_1 = require("../impresora/impresora.class");
 const TIPO_ENTRADA = 'ENTRADA';
 const TIPO_SALIDA = 'SALIDA';
 const cajaVacia = {
@@ -193,6 +194,7 @@ class CajaClase {
                 }
             }
         }
+        console.log('Tamaño de arrayTickets: ', arrayTicketsCaja.length);
         for (let i = 0; i < arrayTicketsCaja.length; i++) {
             nClientes++;
             totalTickets += arrayTicketsCaja[i].total;
@@ -213,7 +215,7 @@ class CajaClase {
                     break;
             }
         }
-        currentCaja.calaixFetZ = totalTickets;
+        currentCaja['calaixFetZ'] = totalTickets;
         currentCaja.infoExtra['cambioFinal'] = cambioFinal;
         currentCaja.infoExtra['cambioInicial'] = cambioInicial;
         currentCaja.infoExtra['totalSalidas'] = totalSalidas;
@@ -241,7 +243,7 @@ class CajaClase {
             totalTarjeta: totalTarjeta
         };
         try {
-            console.log("Importante, falta imprimir");
+            impresora_class_1.impresoraInstance.imprimirCaja(objImpresion.calaixFet, objImpresion.nombreTrabajador, objImpresion.descuadre, objImpresion.nClientes, objImpresion.recaudado, objImpresion.arrayMovimientos, objImpresion.nombreTienda, objImpresion.fechaInicio, objImpresion.fechaFinal, objImpresion.cInicioCaja, objImpresion.cFinalCaja, objImpresion.impresora);
         }
         catch (err) {
             console.log(err);
@@ -249,6 +251,10 @@ class CajaClase {
         unaCaja.descuadre = descuadre;
         unaCaja.nClientes = nClientes;
         unaCaja.recaudado = recaudado;
+        unaCaja.primerTicket = currentCaja.primerTicket;
+        unaCaja.ultimoTicket = currentCaja.ultimoTicket;
+        unaCaja.infoExtra = currentCaja.infoExtra;
+        unaCaja.calaixFetZ = currentCaja.calaixFetZ;
         return unaCaja;
     }
 }

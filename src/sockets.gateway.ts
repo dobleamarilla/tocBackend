@@ -78,7 +78,7 @@ export class SocketGateway{
         let arr = [];
   
         try {
-          file = fs.readFileSync("/home/eze/clearOne/CoLinux.cfg", "utf8");
+          file = fs.readFileSync("/home/hit/clearOne/CoLinux.cfg", "utf8");
           arr = file.split(/\r?\n/);
         } catch(err) {
           console.log("Error: No se ha podido leer el archivo CoLinux");

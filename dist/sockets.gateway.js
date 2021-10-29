@@ -69,7 +69,7 @@ let SocketGateway = class SocketGateway {
                 let file = null;
                 let arr = [];
                 try {
-                    file = fs.readFileSync("/home/eze/clearOne/CoLinux.cfg", "utf8");
+                    file = fs.readFileSync("/home/hit/clearOne/CoLinux.cfg", "utf8");
                     arr = file.split(/\r?\n/);
                 }
                 catch (err) {

@@ -132,7 +132,7 @@ export class SocketGateway{
   
           //Primero STX, segundo estado transacción: correcta = 48, incorrecta != 48
           if(respuestaTexto.includes("DENEGADA") == false && respuestaTexto.includes("denegada") == false && respuestaTexto.includes("ERROR") == false && respuestaTexto.includes("error") == false && objEnviar.data[0] == 2 && objEnviar.data[1] == 48 && objEnviar.data[2] == 59) { //SERÁ ACEPTADA
-              movimientosInstance.nuevaSalida(objEnviar.objTicket.total, 'Targeta', 'TARJETA', true, objEnviar.objTicket._id);
+              movimientosInstance.nuevaSalida(objEnviar.objTicket.total, 'Targeta', 'TARJETA', false, objEnviar.objTicket._id);
               if (await ticketsInstance.insertarTicket(objEnviar.objTicket)) {
                   if (await cestas.borrarCesta(objEnviar.idCesta)) {
                       if (await parametrosInstance.setUltimoTicket(objEnviar.objTicket._id)) {

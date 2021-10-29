@@ -114,7 +114,7 @@ let SocketGateway = class SocketGateway {
                         respuestaTexto += String.fromCharCode(objEnviar.data[i]);
                     }
                     if (respuestaTexto.includes("DENEGADA") == false && respuestaTexto.includes("denegada") == false && respuestaTexto.includes("ERROR") == false && respuestaTexto.includes("error") == false && objEnviar.data[0] == 2 && objEnviar.data[1] == 48 && objEnviar.data[2] == 59) {
-                        movimientos_clase_1.movimientosInstance.nuevaSalida(objEnviar.objTicket.total, 'Targeta', 'TARJETA', true, objEnviar.objTicket._id);
+                        movimientos_clase_1.movimientosInstance.nuevaSalida(objEnviar.objTicket.total, 'Targeta', 'TARJETA', false, objEnviar.objTicket._id);
                         if (await tickets_clase_1.ticketsInstance.insertarTicket(objEnviar.objTicket)) {
                             if (await cestas_clase_1.cestas.borrarCesta(objEnviar.idCesta)) {
                                 if (await parametros_clase_1.parametrosInstance.setUltimoTicket(objEnviar.objTicket._id)) {

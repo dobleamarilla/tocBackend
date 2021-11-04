@@ -55,6 +55,26 @@ let ClientesController = class ClientesController {
             return { error: true, mensaje: 'Error en backend comprobarVIP' };
         });
     }
+    descargarClientesFinales() {
+        const parametros = parametros_clase_1.parametrosInstance.getParametros();
+        return axios_1.default.post('clientes/getClientesFinales', { database: parametros.database }).then((res) => {
+            if (res.data.error == false) {
+                return clientes_clase_1.clienteInstance.insertarClientes(res.data.info).then((operacionResult) => {
+                    if (operacionResult) {
+                        return { error: false };
+                    }
+                    return { error: true, mensaje: 'Backend: Error en insertarClientes de clientes/descargarClientesFinales' };
+                }).catch((err) => {
+                    console.log(err);
+                    return { error: true, mensaje: 'Backend: Error en insertarClientes de clientes/descargarClientesFinales CATCH' };
+                });
+            }
+            return { error: true, mensaje: res.data.mensaje };
+        }).catch((err) => {
+            console.log(err);
+            return { error: true, mensaje: 'Backend: Error en clientes/descargarClientesFinales CATCH' };
+        });
+    }
 };
 __decorate([
     (0, common_1.Post)('buscar'),
@@ -77,6 +97,12 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], ClientesController.prototype, "comprobarVIP", null);
+__decorate([
+    (0, common_1.Post)('descargarClientesFinales'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], ClientesController.prototype, "descargarClientesFinales", null);
 ClientesController = __decorate([
     (0, common_1.Controller)('clientes')
 ], ClientesController);

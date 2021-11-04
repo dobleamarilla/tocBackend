@@ -27,4 +27,17 @@ export declare class ClientesController {
         error: boolean;
         mensaje: string;
     }>;
+    descargarClientesFinales(): Promise<{
+        error: boolean;
+        mensaje?: undefined;
+    } | {
+        error: boolean;
+        mensaje: string;
+    } | {
+        error: boolean;
+        mensaje: string;
+    } | {
+        error: boolean;
+        mensaje: string;
+    }>;
 }

@@ -7,7 +7,6 @@ const schMonedas = require("../monedas/monedas.mongodb");
 const trabajadores_clase_1 = require("../trabajadores/trabajadores.clase");
 const parametros_clase_1 = require("../parametros/parametros.clase");
 const movimientos_clase_1 = require("../movimientos/movimientos.clase");
-const impresora_class_1 = require("../impresora/impresora.class");
 const TIPO_ENTRADA = 'ENTRADA';
 const TIPO_SALIDA = 'SALIDA';
 const cajaVacia = {
@@ -243,12 +242,6 @@ class CajaClase {
             impresora: params.tipoImpresora,
             totalTarjeta: totalTarjeta
         };
-        try {
-            impresora_class_1.impresoraInstance.imprimirCaja(objImpresion.calaixFet, objImpresion.nombreTrabajador, objImpresion.descuadre, objImpresion.nClientes, objImpresion.recaudado, objImpresion.arrayMovimientos, objImpresion.nombreTienda, objImpresion.fechaInicio, objImpresion.fechaFinal, objImpresion.cInicioCaja, objImpresion.cFinalCaja, objImpresion.impresora);
-        }
-        catch (err) {
-            console.log(err);
-        }
         unaCaja.descuadre = descuadre;
         unaCaja.nClientes = nClientes;
         unaCaja.recaudado = recaudado;

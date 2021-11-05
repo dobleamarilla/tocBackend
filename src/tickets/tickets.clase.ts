@@ -4,6 +4,7 @@ import { trabajadoresInstance } from "../trabajadores/trabajadores.clase";
 import { cestas } from "../cestas/cestas.clase";
 import { parametrosInstance } from "../parametros/parametros.clase";
 import { movimientosInstance } from "../movimientos/movimientos.clase";
+import { articulosInstance } from "../articulos/articulos.clase";
 
 export class TicketsClase {
 
@@ -38,6 +39,7 @@ export class TicketsClase {
     insertarTicket(ticket: TicketsInterface) {
         return schTickets.nuevoTicket(ticket).then((res) => {
             if (res.acknowledged) {
+                articulosInstance.setEstadoTarifaEspecial(false);
                 return true;
             } else {
                 return false;

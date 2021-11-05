@@ -1,5 +1,6 @@
 import { Controller, Post, Body } from '@nestjs/common';
 import axios from 'axios';
+import { articulosInstance } from '../articulos/articulos.clase';
 import { parametrosInstance } from '../parametros/parametros.clase';
 import { clienteInstance } from './clientes.clase';
 
@@ -35,7 +36,21 @@ export class ClientesController {
         const parametros = parametrosInstance.getParametros();
         return axios.post('clientes/comprobarVIP', { database: parametros.database, idClienteFinal: params.idClienteFinal }).then((res: any) => {
             if (res.data.error === false) {
-                return { error: false, info: res.data.info };
+                if (res.data.articulosEspeciales != undefined) {
+                    /* Añadir articulosTarifaEspecial a Mongo */
+                    articulosInstance.setEstadoTarifaEspecial(true);
+                    return articulosInstance.insertarArticulos(res.data.articulosEspeciales, true).then((resInsertArtEspecial) => {
+                        if (resInsertArtEspecial) {
+                            return { error: false, info: res.data.info };
+                        }
+                        return { error: true, mensaje: 'Backend: Error en clientes/comprobarVIP > InsertarArticulos especiales' };
+                    }).catch((err) => {
+                        console.log(err);
+                        return { error: true, mensaje: 'Backend: Error en catch clientes/comprobarVIP > InsertarArticulos (especiales)' };
+                    });
+                } else {
+                    return { error: false, info: res.data.info };
+                }
             } else {
                 return { error: true, mensaje: res.data.mensaje };
             }

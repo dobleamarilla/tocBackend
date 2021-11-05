@@ -98,7 +98,6 @@ class CajaClase {
     }
     async cerrarCaja(total, detalleCierre, guardarInfoMonedas, totalDatafono3G) {
         let estaAbierta = await this.cajaAbierta();
-        console.log('El total del cierre ES: ', total);
         if (estaAbierta) {
             let cajaActual = await this.getInfoCaja();
             cajaActual.totalCierre = total;

@@ -6,6 +6,7 @@ const trabajadores_clase_1 = require("../trabajadores/trabajadores.clase");
 const cestas_clase_1 = require("../cestas/cestas.clase");
 const parametros_clase_1 = require("../parametros/parametros.clase");
 const movimientos_clase_1 = require("../movimientos/movimientos.clase");
+const articulos_clase_1 = require("../articulos/articulos.clase");
 class TicketsClase {
     getTicketByID(idTicket) {
         return schTickets.getTicketByID(idTicket).then((res) => {
@@ -36,6 +37,7 @@ class TicketsClase {
     insertarTicket(ticket) {
         return schTickets.nuevoTicket(ticket).then((res) => {
             if (res.acknowledged) {
+                articulos_clase_1.articulosInstance.setEstadoTarifaEspecial(false);
                 return true;
             }
             else {

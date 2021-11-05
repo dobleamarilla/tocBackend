@@ -105,12 +105,20 @@ export class TrabajadoresClase {
     ficharTrabajador(idTrabajador: number): Promise<boolean> {
         return schTrabajadores.ficharTrabajador(idTrabajador).then((res) => {
             if (res.acknowledged) {
-                return this.nuevoFichajesSincro("ENTRADA", idTrabajador).then((res2) => {
-                    if (res2.acknowledged) {
-                        return true;
-                    } else {
-                        return false;
+                return this.setCurrentTrabajador(idTrabajador).then((resSetCurrent) => {
+                    if (resSetCurrent) {
+                        return this.nuevoFichajesSincro("ENTRADA", idTrabajador).then((res2) => {
+                            if (res2.acknowledged) {
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        }).catch((err) => {
+                            console.log(err);
+                            return false;
+                        });
                     }
+                    return false;
                 }).catch((err) => {
                     console.log(err);
                     return false;

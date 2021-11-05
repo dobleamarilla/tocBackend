@@ -167,7 +167,6 @@ class CestaClase {
     }
     async insertarArticuloCesta(infoArticulo, unidades, idCesta, infoAPeso = null) {
         var miCesta = await this.getCesta(idCesta);
-        console.log("El ID de la cesta es: ", idCesta);
         if (miCesta.lista.length > 0) {
             let encontrado = false;
             for (let i = 0; i < miCesta.lista.length; i++) {
@@ -207,7 +206,8 @@ class CestaClase {
                 miCesta.tiposIva = (0, funciones_1.construirObjetoIvas)(infoArticulo, unidades, miCesta.tiposIva, infoAPeso);
             }
         }
-        return await promociones_clase_1.ofertas.buscarOfertas(miCesta, viejoIva);
+        const temporal = await promociones_clase_1.ofertas.buscarOfertas(miCesta, viejoIva);
+        return temporal;
     }
     async addItem(idArticulo, idBoton, aPeso, infoAPeso, idCesta) {
         var unidades = this.udsAplicar;
@@ -232,6 +232,7 @@ class CestaClase {
             }
         }
         else {
+            console.log('La caja está cerrada, no se puede insertar un articulo en la cesta');
         }
         this.udsAplicar = 1;
         return cestaRetornar;

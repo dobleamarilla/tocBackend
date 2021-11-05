@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ClientesController = void 0;
 const common_1 = require("@nestjs/common");
 const axios_1 = require("axios");
+const articulos_clase_1 = require("../articulos/articulos.clase");
 const parametros_clase_1 = require("../parametros/parametros.clase");
 const clientes_clase_1 = require("./clientes.clase");
 let ClientesController = class ClientesController {
@@ -45,7 +46,21 @@ let ClientesController = class ClientesController {
         const parametros = parametros_clase_1.parametrosInstance.getParametros();
         return axios_1.default.post('clientes/comprobarVIP', { database: parametros.database, idClienteFinal: params.idClienteFinal }).then((res) => {
             if (res.data.error === false) {
-                return { error: false, info: res.data.info };
+                if (res.data.articulosEspeciales != undefined) {
+                    articulos_clase_1.articulosInstance.setEstadoTarifaEspecial(true);
+                    return articulos_clase_1.articulosInstance.insertarArticulos(res.data.articulosEspeciales, true).then((resInsertArtEspecial) => {
+                        if (resInsertArtEspecial) {
+                            return { error: false, info: res.data.info };
+                        }
+                        return { error: true, mensaje: 'Backend: Error en clientes/comprobarVIP > InsertarArticulos especiales' };
+                    }).catch((err) => {
+                        console.log(err);
+                        return { error: true, mensaje: 'Backend: Error en catch clientes/comprobarVIP > InsertarArticulos (especiales)' };
+                    });
+                }
+                else {
+                    return { error: false, info: res.data.info };
+                }
             }
             else {
                 return { error: true, mensaje: res.data.mensaje };

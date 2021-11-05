@@ -191,7 +191,7 @@ export class CestaClase {
   }
     async insertarArticuloCesta(infoArticulo, unidades: number, idCesta: number, infoAPeso = null) {
         var miCesta = await this.getCesta(idCesta);
-        console.log("El ID de la cesta es: ", idCesta);
+
         if(miCesta.lista.length > 0)
         {
             let encontrado = false;
@@ -242,30 +242,31 @@ export class CestaClase {
                 miCesta.tiposIva = construirObjetoIvas(infoArticulo, unidades, miCesta.tiposIva, infoAPeso);
             }            
         }
-        return await ofertas.buscarOfertas(miCesta, viejoIva);
+        const temporal = await ofertas.buscarOfertas(miCesta, viejoIva);
+
+        return temporal; //await ofertas.buscarOfertas(miCesta, viejoIva);
     }
 
     async addItem(idArticulo: number, idBoton: string, aPeso: boolean, infoAPeso: any, idCesta: number) {
         var unidades = this.udsAplicar;
         var cestaRetornar: CestasInterface = null;
-        if(cajaInstance.cajaAbierta())
-        {
-            try
-            {
+        if(cajaInstance.cajaAbierta()) {
+          
+            try {
                 if(!aPeso) { // TIPO NORMAL                  
+                  
                     let infoArticulo = await articulosInstance.getInfoArticulo(idArticulo);
-                    if(infoArticulo) //AQUI PENSAR ALGUNA COMPROBACIÓN CUANDO NO EXISTA O FALLE ESTE GET
-                    {
-                        cestaRetornar = await this.insertarArticuloCesta(infoArticulo, unidades, idCesta);
-                    }
-                    else
-                    {
-                        // vueToast.abrir('error', 'Este artículo tiene errores');
+                    if(infoArticulo) { // AQUI PENSAR ALGUNA COMPROBACIÓN CUANDO NO EXISTA O FALLE ESTE GET
+                      
+                      cestaRetornar = await this.insertarArticuloCesta(infoArticulo, unidades, idCesta);
+                      
+                    } else {
+                      
+                      // vueToast.abrir('error', 'Este artículo tiene errores');
                     }
                 }
-                else //TIPO PESO
-                {
-                    cestaRetornar = await this.insertarArticuloCesta(infoAPeso.infoArticulo, 1, idCesta, infoAPeso);
+                else { //TIPO PESO
+                  cestaRetornar = await this.insertarArticuloCesta(infoAPeso.infoArticulo, 1, idCesta, infoAPeso);
                 }
             }
             catch(err)
@@ -277,9 +278,11 @@ export class CestaClase {
         }
         else
         {
+          console.log('La caja está cerrada, no se puede insertar un articulo en la cesta');
             // vueToast.abrir('danger', 'Se requiere una caja abierta para cobrar');
         }
         this.udsAplicar = 1;
+        
         return cestaRetornar;
     }
     setUnidadesAplicar(unidades: number) {

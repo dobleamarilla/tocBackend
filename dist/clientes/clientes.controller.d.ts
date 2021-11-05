@@ -21,8 +21,11 @@ export declare class ClientesController {
         mensaje?: undefined;
     } | {
         error: boolean;
-        mensaje: any;
+        mensaje: string;
         info?: undefined;
+    } | {
+        error: boolean;
+        mensaje: string;
     } | {
         error: boolean;
         mensaje: string;

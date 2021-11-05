@@ -67,16 +67,20 @@ export class TrabajadoresController {
 
     @Post('fichar')
     fichar(@Body() params) {
-        return trabajadoresInstance.ficharTrabajador(params.idTrabajador).then((res) => {
-            if (res) {
-                return { error: false };
-            } else {
-                return { error: true, mensaje: 'Error en ficharTrabajador()' };
-            }
-        }).catch((err) => {
-            console.log(err);
-            return { error: true, mensaje: 'Error, mirar consola nest' };
-        });
+        if (params.idTrabajador != undefined) {
+            return trabajadoresInstance.ficharTrabajador(params.idTrabajador).then((res) => {
+                if (res) {
+                    return { error: false };
+                } else {
+                    return { error: true, mensaje: 'Error en ficharTrabajador()' };
+                }
+            }).catch((err) => {
+                console.log(err);
+                return { error: true, mensaje: 'Error, mirar consola nest' };
+            });
+        } else {
+            return { error: true, mensaje: 'Backend: Faltan datos en trabajadores/fichar' };
+        }
     }
 
     @Post('desfichar')

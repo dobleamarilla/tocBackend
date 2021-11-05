@@ -74,17 +74,22 @@ let TrabajadoresController = class TrabajadoresController {
         return trabajadores_clase_1.trabajadoresInstance.buscar(params.busqueda);
     }
     fichar(params) {
-        return trabajadores_clase_1.trabajadoresInstance.ficharTrabajador(params.idTrabajador).then((res) => {
-            if (res) {
-                return { error: false };
-            }
-            else {
-                return { error: true, mensaje: 'Error en ficharTrabajador()' };
-            }
-        }).catch((err) => {
-            console.log(err);
-            return { error: true, mensaje: 'Error, mirar consola nest' };
-        });
+        if (params.idTrabajador != undefined) {
+            return trabajadores_clase_1.trabajadoresInstance.ficharTrabajador(params.idTrabajador).then((res) => {
+                if (res) {
+                    return { error: false };
+                }
+                else {
+                    return { error: true, mensaje: 'Error en ficharTrabajador()' };
+                }
+            }).catch((err) => {
+                console.log(err);
+                return { error: true, mensaje: 'Error, mirar consola nest' };
+            });
+        }
+        else {
+            return { error: true, mensaje: 'Backend: Faltan datos en trabajadores/fichar' };
+        }
     }
     desfichar(params) {
         return trabajadores_clase_1.trabajadoresInstance.desficharTrabajador(params.idTrabajador).then((res) => {

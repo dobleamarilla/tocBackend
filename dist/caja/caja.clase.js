@@ -168,6 +168,7 @@ class CajaClase {
         var nClientes = 0;
         const params = parametros_clase_1.parametrosInstance.getParametros();
         let currentCaja = await this.getInfoCaja();
+        console.log('Observá: ', currentCaja);
         if (arrayTicketsCaja.length > 0) {
             currentCaja.primerTicket = arrayTicketsCaja[0]._id;
             currentCaja.ultimoTicket = arrayTicketsCaja[arrayTicketsCaja.length - 1]._id;

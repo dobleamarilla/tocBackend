@@ -1,6 +1,7 @@
 export declare class CajaController {
     cerrarCaja(params: any): Promise<{
         error: boolean;
+        mensaje?: undefined;
     } | {
         error: boolean;
         mensaje: string;

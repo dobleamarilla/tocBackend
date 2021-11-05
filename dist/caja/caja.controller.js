@@ -26,14 +26,15 @@ let CajaController = class CajaController {
                         return { error: false };
                     }
                     else {
-                        return { error: true };
+                        return { error: true, mensaje: 'Backend: No se ha podido cerrar caja' };
                     }
                 }).catch((err) => {
-                    return { error: true };
+                    console.log(err);
+                    return { error: true, mensaje: 'Backend: Error CATCH caja/cerrarCaja' };
                 });
             }
             else {
-                return { error: true, mensaje: 'No hay ninguna caja abierta' };
+                return { error: true, mensaje: 'Backend: No hay ninguna caja abierta' };
             }
         }
         else {

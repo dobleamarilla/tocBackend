@@ -189,7 +189,7 @@ export class CajaClase {
         var totalTarjeta = 0;
         var totalEnEfectivo = 0;
         var cambioInicial = currentCaja.totalApertura;
-        var cambioFinal = currentCaja.totalCierre;
+        var cambioFinal = unaCaja.totalCierre;
         var totalSalidas = 0;
         var totalEntradas = 0;
         var recaudado = 0; //this.caja.totalCierre-this.caja.totalApertura + totalSalidas - totalEntradas;
@@ -257,26 +257,26 @@ export class CajaClase {
 
         // vuePantallaCierre.setVariables(objImpresion); ESTO ENVÍA EL DETALLE DEL CIERRE AL FRONTEND
 
-        // try {
-        //     impresoraInstance.imprimirCaja(
-        //         objImpresion.calaixFet,
-        //         objImpresion.nombreTrabajador,
-        //         objImpresion.descuadre,
-        //         objImpresion.nClientes,
-        //         objImpresion.recaudado,
-        //         objImpresion.arrayMovimientos,
-        //         objImpresion.nombreTienda,
-        //         objImpresion.fechaInicio,
-        //         objImpresion.fechaFinal,
-        //         objImpresion.cInicioCaja,
-        //         objImpresion.cFinalCaja,
-        //         objImpresion.impresora,
-        //     );
-        // }
-        // catch(err) {
-        //     // vueToast.abrir('error', 'Impresora no detectada');
-        //     console.log(err);
-        // }
+        try {
+            impresoraInstance.imprimirCaja(
+                objImpresion.calaixFet,
+                objImpresion.nombreTrabajador,
+                objImpresion.descuadre,
+                objImpresion.nClientes,
+                objImpresion.recaudado,
+                objImpresion.arrayMovimientos,
+                objImpresion.nombreTienda,
+                objImpresion.fechaInicio,
+                objImpresion.fechaFinal,
+                objImpresion.cInicioCaja,
+                objImpresion.cFinalCaja,
+                objImpresion.impresora,
+            );
+        }
+        catch(err) {
+            // vueToast.abrir('error', 'Impresora no detectada');
+            console.log(err);
+        }
         
         unaCaja.descuadre = descuadre;
         unaCaja.nClientes = nClientes;

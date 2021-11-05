@@ -106,7 +106,7 @@ export class CajaClase {
 
     async cerrarCaja(total: number, detalleCierre, guardarInfoMonedas, totalDatafono3G: number) { //Promise<boolean> {
         let estaAbierta = await this.cajaAbierta();
-
+        console.log('El total del cierre ES: ', total);
         if (estaAbierta) {
             let cajaActual: CajaInterface = await this.getInfoCaja();
             cajaActual.totalCierre = total;
@@ -256,7 +256,7 @@ export class CajaClase {
         };
 
         // vuePantallaCierre.setVariables(objImpresion); ESTO ENVÍA EL DETALLE DEL CIERRE AL FRONTEND
-        
+
         // try {
         //     impresoraInstance.imprimirCaja(
         //         objImpresion.calaixFet,

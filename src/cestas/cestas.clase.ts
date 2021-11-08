@@ -247,8 +247,7 @@ export class CestaClase {
         return temporal; //await ofertas.buscarOfertas(miCesta, viejoIva);
     }
 
-    async addItem(idArticulo: number, idBoton: string, aPeso: boolean, infoAPeso: any, idCesta: number) {
-        var unidades = this.udsAplicar;
+    async addItem(idArticulo: number, idBoton: string, aPeso: boolean, infoAPeso: any, idCesta: number, unidades: number = 1) {
         var cestaRetornar: CestasInterface = null;
         if(cajaInstance.cajaAbierta()) {
           

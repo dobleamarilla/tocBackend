@@ -209,8 +209,7 @@ class CestaClase {
         const temporal = await promociones_clase_1.ofertas.buscarOfertas(miCesta, viejoIva);
         return temporal;
     }
-    async addItem(idArticulo, idBoton, aPeso, infoAPeso, idCesta) {
-        var unidades = this.udsAplicar;
+    async addItem(idArticulo, idBoton, aPeso, infoAPeso, idCesta, unidades = 1) {
         var cestaRetornar = null;
         if (caja_clase_1.cajaInstance.cajaAbierta()) {
             try {

@@ -73,6 +73,27 @@ class CajaClase {
             return false;
         });
     }
+    guardarMonedas(arrayMonedas, tipo) {
+        return schCajas.guardarMonedas(arrayMonedas, tipo).then((res) => {
+            return res.acknowledged;
+        }).catch((err) => {
+            console.log(err);
+            return false;
+        });
+    }
+    getMonedas(tipo) {
+        return schCajas.getMonedas(tipo).then((res) => {
+            if (res != null) {
+                return res.array;
+            }
+            else {
+                return null;
+            }
+        }).catch((err) => {
+            console.log(err);
+            return null;
+        });
+    }
     nuevoItemSincroCajas(caja) {
         let cajaInsertar = {};
         cajaInsertar['_id'] = Date.now();

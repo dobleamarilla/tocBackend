@@ -5,7 +5,6 @@ import { cajaInstance } from './caja.clase';
 export class CajaController {
     @Post('cerrarCaja')
     async cerrarCaja(@Body() params) {
-        console.log("Soy cerrar caja");
         const cajaAbierta = await cajaInstance.cajaAbierta();
         if (params.total != undefined, params.detalle != undefined, params.infoDinero != undefined, params.cantidad3G != undefined) {
             if (cajaAbierta) {
@@ -16,7 +15,15 @@ export class CajaController {
                     params.cantidad3G
                 ).then((res) => {
                     if (res) {
-                        return { error: false };
+                        return cajaInstance.guardarMonedas(params.infoDinero, 'CLAUSURA').then((res2) => {
+                            if (res2) {
+                                return { error: false };
+                            }
+                            return { error: true, mensaje: 'Backend: Error en caja/cerrarCaja > Comprobar log' };
+                        }).catch((err) => {
+                            console.log(err);
+                            return { error: true, mensaje: 'Error en catch caja/cerrarCaja > guardaMonedas' };
+                        });
                     } else {
                         return { error: true, mensaje: 'Backend: No se ha podido cerrar caja' };
                     }
@@ -34,17 +41,20 @@ export class CajaController {
 
     @Post('abrirCaja')
     abrirCaja(@Body() params) { // No probado! Se le pasa solo el array de monedas
-        console.log("Soy abrir caja");
-        return cajaInstance.abrirCaja(params).then((res) => {
-            if (res) {
-                return { error: false };
-            } else {
+        if (params.total != undefined && params.detalle != undefined) {
+            return cajaInstance.abrirCaja(params).then((res) => {
+                if (res) {
+                    return { error: false };
+                } else {
+                    return { error: true };
+                }
+            }).catch((err) => {
+                console.log(err);
                 return { error: true };
-            }
-        }).catch((err) => {
-            console.log(err);
-            return { error: true };
-        });
+            });
+        } else {
+            return { error: true, mensaje: 'Backend: Faltan datos en caja/abrirCaja' };
+        }
     }
 
     @Post('estadoCaja')
@@ -58,6 +68,16 @@ export class CajaController {
         }).catch((err) => {
             console.log(err);
             return { error: true, mensaje: 'Backend: Error en caja/estadoCaja CATCH' };
+        });
+    }
+
+    @Post('getMonedasUltimoCierre')
+    getMonedasUltimoCierre() { // No probado! Se le pasa solo el array de monedas
+        return cajaInstance.getMonedas('CLAUSURA').then((res) => {
+            return { error: false, info: res };
+        }).catch((err) => {
+            console.log(err);
+            return { error: true, mensaje: 'Backend: Error en caja/getMonedasUltimoCierre > CATCH' }
         });
     }
 }

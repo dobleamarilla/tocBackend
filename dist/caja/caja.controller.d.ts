@@ -10,10 +10,20 @@ export declare class CajaController {
         error: boolean;
     } | {
         error: boolean;
-    }>;
+    }> | {
+        error: boolean;
+        mensaje: string;
+    };
     estadoCaja(): Promise<{
         abierta: boolean;
         error: boolean;
+    } | {
+        error: boolean;
+        mensaje: string;
+    }>;
+    getMonedasUltimoCierre(): Promise<{
+        error: boolean;
+        info: any;
     } | {
         error: boolean;
         mensaje: string;

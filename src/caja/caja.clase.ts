@@ -79,6 +79,28 @@ export class CajaClase {
         });
     }
 
+    guardarMonedas(arrayMonedas: any, tipo: 'APERTURA' | 'CLAUSURA') {
+        return schCajas.guardarMonedas(arrayMonedas, tipo).then((res) => {
+            return res.acknowledged;
+        }).catch((err) => {
+            console.log(err);
+            return false;
+        });
+    }
+
+    getMonedas(tipo: 'APERTURA' | 'CLAUSURA') {
+        return schCajas.getMonedas(tipo).then((res) => {
+            if (res != null) {
+                return res.array;
+            } else {
+                return null;
+            }
+        }).catch((err) => {
+            console.log(err);
+            return null;
+        });
+    }
+
     nuevoItemSincroCajas(caja: CajaInterface) {
         let cajaInsertar: CajaForSincroInterface | {} = {};
         cajaInsertar['_id'] = Date.now();

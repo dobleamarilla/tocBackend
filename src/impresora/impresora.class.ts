@@ -118,7 +118,7 @@ export class Impresora {
         const tipoImpresora = info.impresora;
         const infoClienteVip = info.infoClienteVip;
         const infoCliente = info.infoCliente;
-
+        console.log("Se imprime: ", cabecera);
         try {
             exec('echo sa | sudo -S sh /home/hit/tocGame/scripts/permisos.sh');
             if(tipoImpresora === 'USB')

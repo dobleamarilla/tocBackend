@@ -25,6 +25,19 @@ let SocketGateway = class SocketGateway {
     test() {
         this.server.emit('test', 'O Rei Eze');
     }
+    consultarPuntos(params) {
+        if (params != undefined) {
+            if (params.idClienteFinal != undefined) {
+                this.server.emit('resConsultaPuntos', { error: false, info: 69 });
+            }
+            else {
+                this.server.emit('resConsultaPuntos', { error: true, mensaje: 'Backend: Faltan datos en socket > consultarPuntos' });
+            }
+        }
+        else {
+            this.server.emit('resConsultaPuntos', { error: true, mensaje: 'Backend: Faltan datos en socket > consultarPuntos' });
+        }
+    }
     async cobrarConClearone(params) {
         if (params != undefined) {
             if (params.total != undefined && params.idCesta != undefined) {
@@ -60,6 +73,7 @@ let SocketGateway = class SocketGateway {
                     },
                     enviado: false,
                     enTransito: false,
+                    regalo: (cesta.regalo != undefined) ? (true) : (false)
                 };
                 const client = new net.Socket();
                 const aux = this;
@@ -181,6 +195,13 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], SocketGateway.prototype, "test", null);
+__decorate([
+    (0, websockets_1.SubscribeMessage)('consultarPuntos'),
+    __param(0, (0, websockets_1.MessageBody)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], SocketGateway.prototype, "consultarPuntos", null);
 __decorate([
     (0, websockets_1.SubscribeMessage)('enviarAlDatafono'),
     __param(0, (0, websockets_1.MessageBody)()),

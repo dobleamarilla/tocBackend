@@ -35,8 +35,8 @@ export class ClientesController {
     comprobarVIP(@Body() params) {
         const parametros = parametrosInstance.getParametros();
         return axios.post('clientes/comprobarVIP', { database: parametros.database, idClienteFinal: params.idClienteFinal }).then((res: any) => {
-            if (res.data.error === false) {
-                if (res.data.articulosEspeciales != undefined) {
+            if (res.data.error === false) { // No hay error
+                if (res.data.articulosEspeciales != undefined) { // Tiene tarifa especial
                     /* Añadir articulosTarifaEspecial a Mongo */
                     articulosInstance.setEstadoTarifaEspecial(true);
                     return articulosInstance.insertarArticulos(res.data.articulosEspeciales, true).then((resInsertArtEspecial) => {
@@ -48,7 +48,8 @@ export class ClientesController {
                         console.log(err);
                         return { error: true, mensaje: 'Backend: Error en catch clientes/comprobarVIP > InsertarArticulos (especiales)' };
                     });
-                } else {
+                } else { // No tiene tarifa especial
+                    // console.log('Puntos: ', res.data.info.puntos);
                     return { error: false, info: res.data.info };
                 }
             } else {

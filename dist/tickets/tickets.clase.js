@@ -7,6 +7,7 @@ const cestas_clase_1 = require("../cestas/cestas.clase");
 const parametros_clase_1 = require("../parametros/parametros.clase");
 const movimientos_clase_1 = require("../movimientos/movimientos.clase");
 const articulos_clase_1 = require("../articulos/articulos.clase");
+const axios_1 = require("axios");
 class TicketsClase {
     getTicketByID(idTicket) {
         return schTickets.getTicketByID(idTicket).then((res) => {
@@ -37,6 +38,18 @@ class TicketsClase {
     insertarTicket(ticket) {
         return schTickets.nuevoTicket(ticket).then((res) => {
             if (res.acknowledged) {
+                if (ticket.regalo == true) {
+                    axios_1.default.post('clientes/resetPuntosCliente', { database: parametros_clase_1.parametrosInstance.getParametros().database, idClienteFinal: ticket.cliente }).then((resultado) => {
+                        if (resultado.data.error == false) {
+                            console.log('Puntos reseteados');
+                        }
+                        else {
+                            console.log(resultado.data.mensaje);
+                        }
+                    }).catch((err) => {
+                        console.log(err);
+                    });
+                }
                 articulos_clase_1.articulosInstance.setEstadoTarifaEspecial(false);
                 return true;
             }
@@ -74,7 +87,8 @@ class TicketsClase {
                 ciudad: ''
             },
             enviado: false,
-            enTransito: false
+            enTransito: false,
+            regalo: (cesta.regalo != undefined && idCliente != '' && idCliente != null) ? (true) : (false)
         };
         if (await this.insertarTicket(objTicket)) {
             if (await cestas_clase_1.cestas.borrarCesta(idCesta)) {
@@ -120,7 +134,8 @@ class TicketsClase {
                 ciudad: ''
             },
             enviado: false,
-            enTransito: false
+            enTransito: false,
+            regalo: (cesta.regalo != undefined && idCliente != '' && idCliente != null) ? (true) : (false)
         };
         if (await this.insertarTicket(objTicket)) {
             if (await cestas_clase_1.cestas.borrarCesta(idCesta)) {

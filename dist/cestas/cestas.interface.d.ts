@@ -11,6 +11,7 @@ export interface CestasInterface {
         importe2: number;
         importe3: number;
     };
+    regalo?: boolean;
     lista: {
         _id: number;
         nombre: string;

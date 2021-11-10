@@ -5,6 +5,7 @@ import { cestas } from "../cestas/cestas.clase";
 import { parametrosInstance } from "../parametros/parametros.clase";
 import { movimientosInstance } from "../movimientos/movimientos.clase";
 import { articulosInstance } from "../articulos/articulos.clase";
+import axios from "axios";
 
 export class TicketsClase {
 
@@ -39,6 +40,17 @@ export class TicketsClase {
     insertarTicket(ticket: TicketsInterface) {
         return schTickets.nuevoTicket(ticket).then((res) => {
             if (res.acknowledged) {
+                if (ticket.regalo == true) {
+                    axios.post('clientes/resetPuntosCliente', { database: parametrosInstance.getParametros().database, idClienteFinal: ticket.cliente }).then((resultado: any) => {
+                        if (resultado.data.error == false) {
+                            console.log('Puntos reseteados');
+                        } else {
+                            console.log(resultado.data.mensaje);
+                        }
+                    }).catch((err) => {
+                        console.log(err);
+                    });
+                }
                 articulosInstance.setEstadoTarifaEspecial(false);
                 return true;
             } else {
@@ -78,7 +90,8 @@ export class TicketsClase {
                 ciudad: ''
             },
             enviado: false,
-            enTransito: false
+            enTransito: false,
+            regalo: (cesta.regalo != undefined && idCliente != '' && idCliente != null) ? (true): (false)
         }
 
         if (await this.insertarTicket(objTicket)) {
@@ -124,7 +137,8 @@ export class TicketsClase {
                 ciudad: ''
             },
             enviado: false,
-            enTransito: false
+            enTransito: false,
+            regalo: (cesta.regalo != undefined && idCliente != '' && idCliente != null) ? (true): (false)
         }
 
         if (await this.insertarTicket(objTicket)) {

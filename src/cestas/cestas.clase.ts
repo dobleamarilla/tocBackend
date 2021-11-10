@@ -277,7 +277,7 @@ export class CestaClase {
         }
         else
         {
-          console.log('La caja está cerrada, no se puede insertar un articulo en la cesta');
+          console.log('Error: La caja está cerrada, no se puede insertar un articulo en la cesta');
             // vueToast.abrir('danger', 'Se requiere una caja abierta para cobrar');
         }
         this.udsAplicar = 1;

@@ -231,7 +231,7 @@ class CestaClase {
             }
         }
         else {
-            console.log('La caja está cerrada, no se puede insertar un articulo en la cesta');
+            console.log('Error: La caja está cerrada, no se puede insertar un articulo en la cesta');
         }
         this.udsAplicar = 1;
         return cestaRetornar;

@@ -52,7 +52,6 @@ class TicketsClase {
         const infoTrabajador = await trabajadores_clase_1.trabajadoresInstance.getCurrentTrabajador();
         const nuevoIdTicket = (await this.getUltimoTicket()) + 1;
         const cesta = await cestas_clase_1.cestas.getCesta(idCesta);
-        console.log("La cesta es", cesta, idCesta);
         if (cesta == null || cesta.lista.length == 0) {
             console.log("Error, la cesta es null o está vacía");
             return false;
@@ -77,14 +76,13 @@ class TicketsClase {
             enviado: false,
             enTransito: false
         };
-        console.log("ABRIR CAJÓN");
         if (await this.insertarTicket(objTicket)) {
             if (await cestas_clase_1.cestas.borrarCesta(idCesta)) {
                 if (await parametros_clase_1.parametrosInstance.setUltimoTicket(objTicket._id)) {
                     return true;
                 }
                 else {
-                    console.log("Errorm no se ha podido cambiar el último id ticket");
+                    console.log("Error no se ha podido cambiar el último id ticket");
                 }
             }
             else {
@@ -100,7 +98,6 @@ class TicketsClase {
         const infoTrabajador = await trabajadores_clase_1.trabajadoresInstance.getCurrentTrabajador();
         const nuevoIdTicket = (await this.getUltimoTicket()) + 1;
         const cesta = await cestas_clase_1.cestas.getCesta(idCesta);
-        console.log("La cesta es", cesta, idCesta);
         if (cesta == null || cesta.lista.length == 0) {
             console.log("Error, la cesta es null o está vacía");
             return false;
@@ -125,7 +122,6 @@ class TicketsClase {
             enviado: false,
             enTransito: false
         };
-        console.log("ABRIR CAJÓN");
         if (await this.insertarTicket(objTicket)) {
             if (await cestas_clase_1.cestas.borrarCesta(idCesta)) {
                 if (await parametros_clase_1.parametrosInstance.setUltimoTicket(objTicket._id)) {
@@ -149,7 +145,6 @@ class TicketsClase {
         const infoTrabajador = await trabajadores_clase_1.trabajadoresInstance.getCurrentTrabajador();
         const nuevoIdTicket = (await this.getUltimoTicket()) + 1;
         const cesta = await cestas_clase_1.cestas.getCesta(idCesta);
-        console.log("La cesta es", cesta, idCesta);
         if (cesta == null || cesta.lista.length == 0) {
             console.log("Error, la cesta es null o está vacía");
             return false;

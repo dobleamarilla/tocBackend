@@ -100,7 +100,6 @@ export class SocketGateway{
           const tipoOperacion = 1; //1=> VENTA
           const importe = Number((info.total * 100).toFixed(2)).toString(); //EN CENTIMOS DE EURO
           const venta_t = `\x02${ventaCliente};${tienda};${tpv};ezequiel;${numeroTicket};${tipoOperacion};${importe};;;;;;;\x03`;
-          console.log('cliente: ', ventaCliente, ' tienda: ', tienda, ' tpv: ', tpv, ' tipoOperacion: ', tipoOperacion, ' numeroTicket: ', numeroTicket, ' nombreDependienta: ', nombreDependienta, ' importe: ', importe);
           client.write(venta_t);
         });
   
@@ -120,7 +119,6 @@ export class SocketGateway{
               objTicket: info,
               idCesta: idCesta
           };
-          console.log('Recibido: ' + data);
           
           // vueCobrar.desactivoEsperaDatafono();
           let respuestaTexto = "";
@@ -158,7 +156,7 @@ export class SocketGateway{
                 });
               }            
           } else { //SERÁ DENEGADA
-            console.log("Data clearOne: ", objEnviar.data);
+            console.log("Denegada: ", objEnviar.data);
             aux.server.emit('resDatafono', {
               error: true,
               mensaje: 'Error, operación DENEGADA'

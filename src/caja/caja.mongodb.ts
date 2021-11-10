@@ -29,7 +29,6 @@ export async function setInfoCaja(data: CajaInterface) {
     
     const database = (await conexion).db('tocgame');
     const caja = database.collection('cajas');
-    console.log("Llego para imprimir el inicioTime: ", data.inicioTime);
     const resultado = await caja.replaceOne({
         _id: "CAJA"
     },

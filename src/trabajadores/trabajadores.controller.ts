@@ -27,7 +27,6 @@ export class TrabajadoresController {
 
     @Post('setActivo')
     setTrabajadorActivo(@Body() params) {
-        console.log('viene: ', params);
         return trabajadoresInstance.setCurrentTrabajadorPorNombre(params.nombre).then((res) => {
             if (res) {
                 return {
@@ -61,7 +60,6 @@ export class TrabajadoresController {
 
     @Post('buscar')
     buscar(@Body() params) {
-        console.log("JA: ", params.busqueda)
         return trabajadoresInstance.buscar(params.busqueda);
     }
 

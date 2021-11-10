@@ -152,7 +152,7 @@ export class CajaClase {
                 deudaDeliveroo: deudaDeliveroo,
                 totalTkrs: totalTkrs
             }
-            console.log("Eo: ", cajaActual.detalleCierre);
+
             const res = await this.nuevoItemSincroCajas(cajaActual);
             if (res.acknowledged) {
                 // ipcRenderer.send('enviar-email', objEmail);
@@ -200,7 +200,7 @@ export class CajaClase {
         var nClientes = 0;
         const params = parametrosInstance.getParametros();
         let currentCaja = await this.getInfoCaja();
-        console.log('Observá: ', currentCaja);
+        
         if(arrayTicketsCaja.length > 0) {
             currentCaja.primerTicket = arrayTicketsCaja[0]._id;
             currentCaja.ultimoTicket = arrayTicketsCaja[arrayTicketsCaja.length-1]._id;
@@ -228,7 +228,6 @@ export class CajaClase {
                 }
             }
         }
-        console.log('Tamaño de arrayTickets: ', arrayTicketsCaja.length);
         for(let i = 0; i < arrayTicketsCaja.length; i++) {
             nClientes++;
             totalTickets += arrayTicketsCaja[i].total;

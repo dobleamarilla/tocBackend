@@ -92,7 +92,6 @@ let SocketGateway = class SocketGateway {
                     const tipoOperacion = 1;
                     const importe = Number((info.total * 100).toFixed(2)).toString();
                     const venta_t = `\x02${ventaCliente};${tienda};${tpv};ezequiel;${numeroTicket};${tipoOperacion};${importe};;;;;;;\x03`;
-                    console.log('cliente: ', ventaCliente, ' tienda: ', tienda, ' tpv: ', tpv, ' tipoOperacion: ', tipoOperacion, ' numeroTicket: ', numeroTicket, ' nombreDependienta: ', nombreDependienta, ' importe: ', importe);
                     client.write(venta_t);
                 });
                 client.on('error', function (err) {
@@ -108,7 +107,6 @@ let SocketGateway = class SocketGateway {
                         objTicket: info,
                         idCesta: idCesta
                     };
-                    console.log('Recibido: ' + data);
                     let respuestaTexto = "";
                     for (let i = 0; i < objEnviar.data.length; i++) {
                         respuestaTexto += String.fromCharCode(objEnviar.data[i]);
@@ -144,7 +142,7 @@ let SocketGateway = class SocketGateway {
                         }
                     }
                     else {
-                        console.log("Data clearOne: ", objEnviar.data);
+                        console.log("Denegada: ", objEnviar.data);
                         aux.server.emit('resDatafono', {
                             error: true,
                             mensaje: 'Error, operación DENEGADA'

@@ -38,7 +38,6 @@ let TrabajadoresController = class TrabajadoresController {
         });
     }
     setTrabajadorActivo(params) {
-        console.log('viene: ', params);
         return trabajadores_clase_1.trabajadoresInstance.setCurrentTrabajadorPorNombre(params.nombre).then((res) => {
             if (res) {
                 return {
@@ -70,7 +69,6 @@ let TrabajadoresController = class TrabajadoresController {
         });
     }
     buscar(params) {
-        console.log("JA: ", params.busqueda);
         return trabajadores_clase_1.trabajadoresInstance.buscar(params.busqueda);
     }
     fichar(params) {

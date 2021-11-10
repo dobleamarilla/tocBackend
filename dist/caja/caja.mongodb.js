@@ -26,7 +26,6 @@ exports.getMonedas = getMonedas;
 async function setInfoCaja(data) {
     const database = (await mongodb_1.conexion).db('tocgame');
     const caja = database.collection('cajas');
-    console.log("Llego para imprimir el inicioTime: ", data.inicioTime);
     const resultado = await caja.replaceOne({
         _id: "CAJA"
     }, data, { upsert: true });

@@ -7,7 +7,6 @@ const schTrabajadores = require("./trabajadores.mongodb");
 const parametros_clase_1 = require("../parametros/parametros.clase");
 class TrabajadoresClase {
     buscar(busqueda) {
-        console.log("xd :", busqueda);
         return schTrabajadores.buscar(busqueda).then((res) => {
             if (res.length > 0) {
                 return res;

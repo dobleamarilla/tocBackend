@@ -234,7 +234,7 @@ class Impresora {
             });
         }
         catch (err) {
-            console.log("Error ECO: ", err);
+            console.log(escpos.USB.findPrinter());
         }
     }
     imprimirSalida(cantidad, fecha, nombreTrabajador, nombreTienda, concepto, tipoImpresora, codigoBarras) {

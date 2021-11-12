@@ -275,7 +275,8 @@ export class Impresora {
             });
         }
         catch (err) {
-            console.log("Error ECO: ", err);
+            //console.log("Error ECO: ", err);
+            console.log(escpos.USB.findPrinter());
         }
     }
 

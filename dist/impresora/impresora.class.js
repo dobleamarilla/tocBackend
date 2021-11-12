@@ -250,7 +250,11 @@ class Impresora {
     imprimirSalida(cantidad, fecha, nombreTrabajador, nombreTienda, concepto, tipoImpresora, codigoBarras) {
         try {
             const fechaStr = dateToString2(fecha);
-            exec('echo sa | sudo -S sh /home/hit/tocGame/scripts/permisos.sh');
+            exec(`  echo sa | sudo -S chmod 777 -R /dev/bus/usb/
+                    sudo chmod 777 -R /dev/ttyS0
+                    sudo chmod 777 -R /dev/ttyS1
+                    sudo chmod 777 -R /dev/    
+            `);
             if (tipoImpresora === 'USB') {
                 var device = new escpos.USB('0x4B8', '0x202');
             }

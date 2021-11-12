@@ -116,7 +116,7 @@ class Impresora {
                     const dispositivoUnico = arrayDevices[0];
                     var device = new escpos.USB(dispositivoUnico);
                 }
-                else if (arrayDevices == 0) {
+                else if (arrayDevices.length == 0) {
                     throw 'Error, no hay ningún dispositivo USB conectado';
                 }
                 else {
@@ -244,7 +244,7 @@ class Impresora {
             });
         }
         catch (err) {
-            console.log(escpos.USB.findPrinter());
+            console.log("Error impresora: ", err);
         }
     }
     imprimirSalida(cantidad, fecha, nombreTrabajador, nombreTienda, concepto, tipoImpresora, codigoBarras) {

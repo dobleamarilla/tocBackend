@@ -234,7 +234,7 @@ class Impresora {
             });
         }
         catch (err) {
-            console.log(err);
+            console.log("Error ECO: ", err);
         }
     }
     imprimirSalida(cantidad, fecha, nombreTrabajador, nombreTienda, concepto, tipoImpresora, codigoBarras) {

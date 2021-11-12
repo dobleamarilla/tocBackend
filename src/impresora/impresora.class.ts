@@ -275,7 +275,7 @@ export class Impresora {
             });
         }
         catch (err) {
-            console.log(err);
+            console.log("Error ECO: ", err);
         }
     }
 

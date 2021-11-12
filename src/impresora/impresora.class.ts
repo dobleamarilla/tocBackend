@@ -16,6 +16,14 @@ escpos.Screen = require('escpos-screen');
 const TIPO_ENTRADA_DINERO = 'ENTRADA';
 const TIPO_SALIDA_DINERO = 'SALIDA';
 
+function permisosImpresora() {
+    exec(`  echo sa | sudo -S chmod 777 -R /dev/bus/usb/
+    sudo chmod 777 -R /dev/ttyS0
+    sudo chmod 777 -R /dev/ttyS1
+    sudo chmod 777 -R /dev/    
+`);
+}
+
 /* Función auxiliar */
 function dateToString2(fecha) {
     var fechaFinal = null;
@@ -120,12 +128,8 @@ export class Impresora {
         const infoCliente = info.infoCliente;
         console.log("Se imprime: ", cabecera);
         try {
-            exec(`  echo sa | sudo -S chmod 777 -R /dev/bus/usb/
-                    sudo chmod 777 -R /dev/ttyS0
-                    sudo chmod 777 -R /dev/ttyS1
-                    sudo chmod 777 -R /dev/    
-            `);
-            
+            permisosImpresora();
+
             if(tipoImpresora === 'USB')
             {
                 const arrayDevices = escpos.USB.findPrinter();
@@ -296,11 +300,7 @@ export class Impresora {
     imprimirSalida(cantidad: number, fecha: number, nombreTrabajador: string, nombreTienda: string, concepto: string, tipoImpresora: string, codigoBarras: string) {
         try {
             const fechaStr = dateToString2(fecha);
-            exec(`  echo sa | sudo -S chmod 777 -R /dev/bus/usb/
-                    sudo chmod 777 -R /dev/ttyS0
-                    sudo chmod 777 -R /dev/ttyS1
-                    sudo chmod 777 -R /dev/    
-            `);
+            permisosImpresora();
 
             if(tipoImpresora === 'USB')
             {
@@ -358,7 +358,7 @@ export class Impresora {
         const parametros = parametrosInstance.getParametros();
         try  {
             const fechaStr = dateToString2(fecha);
-            exec('echo sa | sudo -S sh /home/hit/tocGame/scripts/permisos.sh');
+            permisosImpresora();
             if(parametros.tipoImpresora === 'USB')
             {
                 const arrayDevices = escpos.USB.findPrinter();
@@ -429,7 +429,7 @@ export class Impresora {
             }
             textoMovimientos = `\nTotal targeta:      ${sumaTarjetas.toFixed(2)}\n` + textoMovimientos;
     
-            exec('echo sa | sudo -S sh /home/hit/tocGame/scripts/permisos.sh');
+            permisosImpresora();
             if(tipoImpresora === 'USB')
             {
                 const arrayDevices = escpos.USB.findPrinter();
@@ -500,7 +500,7 @@ export class Impresora {
         const parametros = parametrosInstance.getParametros();
         try {
             if(os.platform() === 'linux') {
-                exec('echo sa | sudo -S sh /home/hit/tocGame/scripts/permisos.sh');
+                permisosImpresora();
                 if(parametros.tipoImpresora === 'USB')
                 {
                     const arrayDevices = escpos.USB.findPrinter();

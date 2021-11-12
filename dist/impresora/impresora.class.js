@@ -109,7 +109,11 @@ class Impresora {
         const infoCliente = info.infoCliente;
         console.log("Se imprime: ", cabecera);
         try {
-            exec('echo sa | sudo -S sh /home/hit/tocGame/scripts/permisos.sh');
+            exec(`  echo sa | sudo -S chmod 777 -R /dev/bus/usb/
+                    sudo chmod 777 -R /dev/ttyS0
+                    sudo chmod 777 -R /dev/ttyS1
+                    sudo chmod 777 -R /dev/    
+            `);
             if (tipoImpresora === 'USB') {
                 const arrayDevices = escpos.USB.findPrinter();
                 if (arrayDevices.length > 0) {

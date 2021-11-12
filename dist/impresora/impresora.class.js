@@ -256,7 +256,17 @@ class Impresora {
                     sudo chmod 777 -R /dev/    
             `);
             if (tipoImpresora === 'USB') {
-                var device = new escpos.USB('0x4B8', '0x202');
+                const arrayDevices = escpos.USB.findPrinter();
+                if (arrayDevices.length > 0) {
+                    const dispositivoUnico = arrayDevices[0];
+                    var device = new escpos.USB(dispositivoUnico);
+                }
+                else if (arrayDevices.length == 0) {
+                    throw 'Error, no hay ningún dispositivo USB conectado';
+                }
+                else {
+                    throw 'Error, hay más de un dispositivo USB conectado';
+                }
             }
             else if (tipoImpresora === 'SERIE') {
                 var device = new escpos.Serial('/dev/ttyS0', {
@@ -301,7 +311,17 @@ class Impresora {
             const fechaStr = dateToString2(fecha);
             exec('echo sa | sudo -S sh /home/hit/tocGame/scripts/permisos.sh');
             if (parametros.tipoImpresora === 'USB') {
-                var device = new escpos.USB('0x4B8', '0x202');
+                const arrayDevices = escpos.USB.findPrinter();
+                if (arrayDevices.length > 0) {
+                    const dispositivoUnico = arrayDevices[0];
+                    var device = new escpos.USB(dispositivoUnico);
+                }
+                else if (arrayDevices.length == 0) {
+                    throw 'Error, no hay ningún dispositivo USB conectado';
+                }
+                else {
+                    throw 'Error, hay más de un dispositivo USB conectado';
+                }
             }
             else if (parametros.tipoImpresora === 'SERIE') {
                 var device = new escpos.Serial('/dev/ttyS0', {
@@ -360,7 +380,17 @@ class Impresora {
             textoMovimientos = `\nTotal targeta:      ${sumaTarjetas.toFixed(2)}\n` + textoMovimientos;
             exec('echo sa | sudo -S sh /home/hit/tocGame/scripts/permisos.sh');
             if (tipoImpresora === 'USB') {
-                var device = new escpos.USB('0x4B8', '0x202');
+                const arrayDevices = escpos.USB.findPrinter();
+                if (arrayDevices.length > 0) {
+                    const dispositivoUnico = arrayDevices[0];
+                    var device = new escpos.USB(dispositivoUnico);
+                }
+                else if (arrayDevices.length == 0) {
+                    throw 'Error, no hay ningún dispositivo USB conectado';
+                }
+                else {
+                    throw 'Error, hay más de un dispositivo USB conectado';
+                }
             }
             else {
                 if (tipoImpresora === 'SERIE') {
@@ -417,7 +447,17 @@ class Impresora {
             if (os.platform() === 'linux') {
                 exec('echo sa | sudo -S sh /home/hit/tocGame/scripts/permisos.sh');
                 if (parametros.tipoImpresora === 'USB') {
-                    var device = new escpos.USB('0x4B8', '0x202');
+                    const arrayDevices = escpos.USB.findPrinter();
+                    if (arrayDevices.length > 0) {
+                        const dispositivoUnico = arrayDevices[0];
+                        var device = new escpos.USB(dispositivoUnico);
+                    }
+                    else if (arrayDevices.length == 0) {
+                        throw 'Error, no hay ningún dispositivo USB conectado';
+                    }
+                    else {
+                        throw 'Error, hay más de un dispositivo USB conectado';
+                    }
                 }
                 else {
                     if (parametros.tipoImpresora === 'SERIE') {

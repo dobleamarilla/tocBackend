@@ -78,7 +78,7 @@ export class SocketGateway{
             },
             enviado: false,
             enTransito: false,
-            regalo: (cesta.regalo != undefined) ? (true): (false)
+            regalo: (cesta.regalo == true && idClienteFinal != '' && idClienteFinal != null) ? (true): (false)
         }
         
         /* Abro socket para ClearONE */

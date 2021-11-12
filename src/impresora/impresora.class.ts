@@ -17,11 +17,16 @@ const TIPO_ENTRADA_DINERO = 'ENTRADA';
 const TIPO_SALIDA_DINERO = 'SALIDA';
 
 function permisosImpresora() {
-    exec(`  echo sa | sudo -S chmod 777 -R /dev/bus/usb/
-    sudo chmod 777 -R /dev/ttyS0
-    sudo chmod 777 -R /dev/ttyS1
-    sudo chmod 777 -R /dev/    
-`);
+    try {
+        exec(`  echo sa | sudo -S chmod 777 -R /dev/bus/usb/
+        echo sa | sudo -S chmod 777 -R /dev/ttyS0
+        echo sa | sudo -S chmod 777 -R /dev/ttyS1
+        echo sa | sudo -S chmod 777 -R /dev/    
+    `);
+    } catch(err) {
+        console.log(err);
+    }
+
 }
 
 /* Función auxiliar */
@@ -70,9 +75,10 @@ export class Impresora {
             const infoClienteAux = await clienteInstance.getClienteByID(infoTicket.cliente);
             const infoCliente = infoClienteAux;
             var auxNombre = '';
-
+            var puntosCliente = 0;
             if(infoCliente != null) {
                 auxNombre = infoCliente.nombre;
+                puntosCliente = await clienteInstance.getPuntosCliente(infoTicket.cliente);
             } else {
                 auxNombre = '';
             }
@@ -90,7 +96,7 @@ export class Impresora {
                 infoClienteVip: infoTicket.infoClienteVip,
                 infoCliente: {
                     nombre: auxNombre,
-                    puntos: 0
+                    puntos: puntosCliente
                 }
             };
             this._venta(sendObject);
@@ -126,7 +132,7 @@ export class Impresora {
         const tipoImpresora = info.impresora;
         const infoClienteVip = info.infoClienteVip;
         const infoCliente = info.infoCliente;
-        console.log("Se imprime: ", cabecera);
+        console.log("Se imprime: ", info);
         try {
             permisosImpresora();
 

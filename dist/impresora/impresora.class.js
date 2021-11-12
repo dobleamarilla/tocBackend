@@ -16,11 +16,16 @@ escpos.Screen = require('escpos-screen');
 const TIPO_ENTRADA_DINERO = 'ENTRADA';
 const TIPO_SALIDA_DINERO = 'SALIDA';
 function permisosImpresora() {
-    exec(`  echo sa | sudo -S chmod 777 -R /dev/bus/usb/
-    sudo chmod 777 -R /dev/ttyS0
-    sudo chmod 777 -R /dev/ttyS1
-    sudo chmod 777 -R /dev/    
-`);
+    try {
+        exec(`  echo sa | sudo -S chmod 777 -R /dev/bus/usb/
+        echo sa | sudo -S chmod 777 -R /dev/ttyS0
+        echo sa | sudo -S chmod 777 -R /dev/ttyS1
+        echo sa | sudo -S chmod 777 -R /dev/    
+    `);
+    }
+    catch (err) {
+        console.log(err);
+    }
 }
 function dateToString2(fecha) {
     var fechaFinal = null;
@@ -61,8 +66,10 @@ class Impresora {
             const infoClienteAux = await clientes_clase_1.clienteInstance.getClienteByID(infoTicket.cliente);
             const infoCliente = infoClienteAux;
             var auxNombre = '';
+            var puntosCliente = 0;
             if (infoCliente != null) {
                 auxNombre = infoCliente.nombre;
+                puntosCliente = await clientes_clase_1.clienteInstance.getPuntosCliente(infoTicket.cliente);
             }
             else {
                 auxNombre = '';
@@ -80,7 +87,7 @@ class Impresora {
                 infoClienteVip: infoTicket.infoClienteVip,
                 infoCliente: {
                     nombre: auxNombre,
-                    puntos: 0
+                    puntos: puntosCliente
                 }
             };
             this._venta(sendObject);
@@ -114,7 +121,7 @@ class Impresora {
         const tipoImpresora = info.impresora;
         const infoClienteVip = info.infoClienteVip;
         const infoCliente = info.infoCliente;
-        console.log("Se imprime: ", cabecera);
+        console.log("Se imprime: ", info);
         try {
             permisosImpresora();
             if (tipoImpresora === 'USB') {

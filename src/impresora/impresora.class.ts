@@ -123,7 +123,16 @@ export class Impresora {
             exec('echo sa | sudo -S sh /home/hit/tocGame/scripts/permisos.sh');
             if(tipoImpresora === 'USB')
             {
-                var device = new escpos.USB('0x4B8', '0x202'); //USB
+                const arrayDevices = escpos.USB.findPrinter();
+                if (arrayDevices.length > 0) {
+                    /* Solo puede haber un dispositivo USB */
+                    const dispositivoUnico = arrayDevices[0];
+                    var device = new escpos.USB(dispositivoUnico); //USB
+                } else if (arrayDevices == 0) {
+                    throw 'Error, no hay ningún dispositivo USB conectado';
+                } else {
+                    throw 'Error, hay más de un dispositivo USB conectado';
+                }
             }
             else
             {

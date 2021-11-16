@@ -8,6 +8,7 @@ const parametros_clase_1 = require("../parametros/parametros.clase");
 const movimientos_clase_1 = require("../movimientos/movimientos.clase");
 const articulos_clase_1 = require("../articulos/articulos.clase");
 const axios_1 = require("axios");
+const clientes_clase_1 = require("../clientes/clientes.clase");
 class TicketsClase {
     getTicketByID(idTicket) {
         return schTickets.getTicketByID(idTicket).then((res) => {
@@ -51,6 +52,7 @@ class TicketsClase {
                     });
                 }
                 articulos_clase_1.articulosInstance.setEstadoTarifaEspecial(false);
+                clientes_clase_1.clienteInstance.setEstadoClienteVIP(false);
                 return true;
             }
             else {
@@ -88,6 +90,7 @@ class TicketsClase {
             },
             enviado: false,
             enTransito: false,
+            intentos: 0,
             regalo: (cesta.regalo == true && idCliente != '' && idCliente != null) ? (true) : (false)
         };
         if (await this.insertarTicket(objTicket)) {
@@ -135,6 +138,7 @@ class TicketsClase {
             },
             enviado: false,
             enTransito: false,
+            intentos: 0,
             regalo: (cesta.regalo == true && idCliente != '' && idCliente != null) ? (true) : (false)
         };
         if (await this.insertarTicket(objTicket)) {
@@ -182,7 +186,8 @@ class TicketsClase {
                 ciudad: infoClienteVip.ciudad
             },
             enTransito: false,
-            enviado: false
+            enviado: false,
+            intentos: 0
         };
         if (await this.insertarTicket(objTicket)) {
             if (await cestas_clase_1.cestas.borrarCesta(idCesta)) {
@@ -229,7 +234,8 @@ class TicketsClase {
                 ciudad: ''
             },
             enTransito: false,
-            enviado: false
+            enviado: false,
+            intentos: 0
         };
         if (await this.insertarTicket(objTicket)) {
             if (await cestas_clase_1.cestas.borrarCesta(idCesta)) {

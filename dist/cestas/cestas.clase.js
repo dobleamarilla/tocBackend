@@ -6,6 +6,7 @@ const funciones_1 = require("../funciones/funciones");
 const articulos_clase_1 = require("../articulos/articulos.clase");
 const promociones_clase_1 = require("../promociones/promociones.clase");
 const caja_clase_1 = require("../caja/caja.clase");
+const clientes_clase_1 = require("../clientes/clientes.clase");
 class CestaClase {
     constructor() {
         schCestas.getUnaCesta().then((respuesta) => {

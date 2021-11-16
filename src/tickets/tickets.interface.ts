@@ -7,7 +7,16 @@ export interface TicketsInterface {
         nombre: string,
         promocion: {
             _id: string,
-            esPromo: boolean
+            esPromo: boolean,
+            infoPromo?: {
+                idPrincipal?: number,
+                cantidadPrincipal?: number,
+                idSecundario?: number,
+                cantidadSecundario?: number,
+                precioRealPrincipal?: number,
+                precioRealSecundario?: number,
+                unidadesOferta?: number
+            }
         },
         subtotal: number,
         unidades: number
@@ -27,6 +36,7 @@ export interface TicketsInterface {
     },
     enviado: boolean,
     enTransito: boolean,
+    intentos: number,
     cliente?: string,
     infoClienteVip?: {
         esVip: boolean,

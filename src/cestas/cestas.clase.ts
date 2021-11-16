@@ -5,6 +5,7 @@ import { construirObjetoIvas, crearCestaVacia } from '../funciones/funciones';
 import { articulosInstance } from '../articulos/articulos.clase';
 import { ofertas } from '../promociones/promociones.clase';
 import { cajaInstance } from '../caja/caja.clase';
+import { clienteInstance } from 'src/clientes/clientes.clase';
 
 /* Siempre cargar la cesta desde MongoDB */
 export class CestaClase {
@@ -242,8 +243,8 @@ export class CestaClase {
                 miCesta.tiposIva = construirObjetoIvas(infoArticulo, unidades, miCesta.tiposIva, infoAPeso);
             }            
         }
-        const temporal = await ofertas.buscarOfertas(miCesta, viejoIva);
 
+        const temporal = await ofertas.buscarOfertas(miCesta, viejoIva);
         return temporal; //await ofertas.buscarOfertas(miCesta, viejoIva);
     }
 

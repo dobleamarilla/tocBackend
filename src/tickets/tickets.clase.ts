@@ -94,6 +94,7 @@ export class TicketsClase {
             enviado: false,
             enTransito: false,
             intentos: 0,
+            comentario: '',
             regalo: (cesta.regalo == true && idCliente != '' && idCliente != null) ? (true): (false)
         }
 
@@ -142,6 +143,7 @@ export class TicketsClase {
             enviado: false,
             enTransito: false,
             intentos: 0,
+            comentario: '',
             regalo: (cesta.regalo == true && idCliente != '' && idCliente != null) ? (true): (false)
         }
 
@@ -191,7 +193,8 @@ export class TicketsClase {
             },
             enTransito: false,
             enviado: false,
-            intentos: 0
+            intentos: 0,
+            comentario: ''
         }
 
         if (await this.insertarTicket(objTicket)) {
@@ -240,7 +243,8 @@ export class TicketsClase {
             },
             enTransito: false,
             enviado: false,
-            intentos: 0
+            intentos: 0,
+            comentario: ''
         }
 
         if (await this.insertarTicket(objTicket)) {

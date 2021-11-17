@@ -38,6 +38,7 @@ export interface TicketsInterface {
     enviado: boolean,
     enTransito: boolean,
     intentos: number,
+    comentario: string,
     cliente?: string,
     infoClienteVip?: {
         esVip: boolean,

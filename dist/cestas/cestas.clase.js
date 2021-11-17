@@ -31,7 +31,6 @@ class CestaClase {
                 return cesta;
             }
             else {
-                console.log("Entro aquí");
                 const nueva = this.nuevaCestaVacia();
                 return this.setCesta(nueva).then((resultado) => {
                     if (resultado) {
@@ -121,18 +120,22 @@ class CestaClase {
                     break;
                 }
             }
-            this.setCesta(cesta).then((result) => {
-                if (result) {
-                    return cesta;
-                }
-                else {
+            return this.recalcularIvas(cesta).then((cestaRecalculada) => {
+                return this.setCesta(cestaRecalculada).then((result) => {
+                    if (result) {
+                        return cestaRecalculada;
+                    }
+                    else {
+                        return false;
+                    }
+                }).catch((err) => {
+                    console.log(err);
                     return false;
-                }
+                });
             }).catch((err) => {
                 console.log(err);
                 return false;
             });
-            return cesta;
         }).catch((err) => {
             console.log(err);
             return false;
@@ -260,10 +263,10 @@ class CestaClase {
             else if (cesta.lista[i].promocion.esPromo === true) {
                 if (cesta.lista[i].nombre == 'Oferta combo') {
                     let infoArticuloPrincipal = await articulos_clase_1.articulosInstance.getInfoArticulo(cesta.lista[i].promocion.infoPromo.idPrincipal);
-                    infoArticuloPrincipal.precioConIva = cesta.lista[i].promocion.infoPromo.precioRealPrincipal / (cesta.lista[i].promocion.infoPromo.unidadesOferta * cesta.lista[i].promocion.infoPromo.cantidadPrincipal);
+                    infoArticuloPrincipal.precioConIva = cesta.lista[i].promocion.infoPromo.precioRealPrincipal;
                     cesta.tiposIva = (0, funciones_1.construirObjetoIvas)(infoArticuloPrincipal, cesta.lista[i].promocion.infoPromo.unidadesOferta * cesta.lista[i].promocion.infoPromo.cantidadPrincipal, cesta.tiposIva);
                     let infoArticuloSecundario = await articulos_clase_1.articulosInstance.getInfoArticulo(cesta.lista[i].promocion.infoPromo.idSecundario);
-                    infoArticuloSecundario.precioConIva = cesta.lista[i].promocion.infoPromo.precioRealSecundario / (cesta.lista[i].promocion.infoPromo.unidadesOferta * cesta.lista[i].promocion.infoPromo.cantidadSecundario);
+                    infoArticuloSecundario.precioConIva = cesta.lista[i].promocion.infoPromo.precioRealSecundario;
                     cesta.tiposIva = (0, funciones_1.construirObjetoIvas)(infoArticuloSecundario, cesta.lista[i].promocion.infoPromo.unidadesOferta * cesta.lista[i].promocion.infoPromo.cantidadSecundario, cesta.tiposIva);
                 }
                 else {

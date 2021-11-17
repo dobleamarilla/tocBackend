@@ -109,7 +109,8 @@ class OfertasClase {
                         cantidadSecundario: cantidadSecundario,
                         precioRealPrincipal: dtoAplicado.precioRealPrincipal,
                         precioRealSecundario: dtoAplicado.precioRealSecundario,
-                        unidadesOferta: unidades
+                        unidadesOferta: unidades,
+                        tipoPromo: 'COMBO'
                     }
                 }
             });
@@ -134,7 +135,8 @@ class OfertasClase {
                         cantidadSecundario: 0,
                         precioRealPrincipal: dtoAplicado.precioRealPrincipal,
                         precioRealSecundario: 0,
-                        unidadesOferta: unidades
+                        unidadesOferta: unidades,
+                        tipoPromo: 'INDIVIDUAL'
                     }
                 }
             });

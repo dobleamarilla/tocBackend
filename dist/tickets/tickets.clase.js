@@ -91,6 +91,7 @@ class TicketsClase {
             enviado: false,
             enTransito: false,
             intentos: 0,
+            comentario: '',
             regalo: (cesta.regalo == true && idCliente != '' && idCliente != null) ? (true) : (false)
         };
         if (await this.insertarTicket(objTicket)) {
@@ -139,6 +140,7 @@ class TicketsClase {
             enviado: false,
             enTransito: false,
             intentos: 0,
+            comentario: '',
             regalo: (cesta.regalo == true && idCliente != '' && idCliente != null) ? (true) : (false)
         };
         if (await this.insertarTicket(objTicket)) {
@@ -187,7 +189,8 @@ class TicketsClase {
             },
             enTransito: false,
             enviado: false,
-            intentos: 0
+            intentos: 0,
+            comentario: ''
         };
         if (await this.insertarTicket(objTicket)) {
             if (await cestas_clase_1.cestas.borrarCesta(idCesta)) {
@@ -235,7 +238,8 @@ class TicketsClase {
             },
             enTransito: false,
             enviado: false,
-            intentos: 0
+            intentos: 0,
+            comentario: ''
         };
         if (await this.insertarTicket(objTicket)) {
             if (await cestas_clase_1.cestas.borrarCesta(idCesta)) {

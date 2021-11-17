@@ -9,13 +9,14 @@ export interface TicketsInterface {
             _id: string;
             esPromo: boolean;
             infoPromo?: {
-                idPrincipal?: number;
-                cantidadPrincipal?: number;
-                idSecundario?: number;
-                cantidadSecundario?: number;
-                precioRealPrincipal?: number;
-                precioRealSecundario?: number;
-                unidadesOferta?: number;
+                idPrincipal: number;
+                cantidadPrincipal: number;
+                idSecundario: number;
+                cantidadSecundario: number;
+                precioRealPrincipal: number;
+                precioRealSecundario: number;
+                unidadesOferta: number;
+                tipoPromo: string;
             };
         };
         subtotal: number;
@@ -37,6 +38,7 @@ export interface TicketsInterface {
     enviado: boolean;
     enTransito: boolean;
     intentos: number;
+    comentario: string;
     cliente?: string;
     infoClienteVip?: {
         esVip: boolean;
